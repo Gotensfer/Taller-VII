@@ -93,3 +93,7 @@ crashlytics-build.properties
 
 # Log files can be ignored.
 fmod_editor.log
+
+# ProBuilder, UserSettings de Probuilder
+
+/ProjectSettings/Packages/com.unity.probuilder/Settings.json
