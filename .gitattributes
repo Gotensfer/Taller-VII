@@ -129,6 +129,3 @@
 
 # Firebase
 *.bundle lfs
-
-# Other
-*.cubemap
