@@ -76,11 +76,11 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # Wwise generated
-GeneratedSoundBanks/
-Temp/
-Build/
+!GeneratedSoundBanks/
+!Temp/
+!Build/
 WwiseProjectDataFolder/Temp/
-WwiseProjectDataFolder/GeneratedSoundBanks/
+!WwiseProjectDataFolder/GeneratedSoundBanks/
 WwiseProjectDataFolder/Attic/
 *.validationcache
 *.wsettings
@@ -91,7 +91,7 @@ WwiseProjectDataFolder/Session/
 
 # Wwise
 *.cache
-*.bnk
+!*.bnk
 *.wem
 *_streaming
 *_vo
