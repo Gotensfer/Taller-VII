@@ -331,8 +331,22 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 3791bef81abe1b4cba1b81e085f5b61b
     GuidInternal: 
-    m_lastTime: -8585239754162026507
-    List: []
+    m_lastTime: -8585239710158213768
+    List:
+    - name: Main
+      guid: b87800d609081c4580d9f845e31192a3
+      id: 3161908922
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3791bef81abe1b4cba1b81e085f5b61b
+      - ElementName: Main
+        ObjectType: 7
+        guid: b87800d609081c4580d9f845e31192a3
+      Path: SoundBanks\Default Work Unit\Main
   EventWwu:
   - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
@@ -345,8 +359,25 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: e7891270cb21784c8e77b9ee0aa68bd2
     GuidInternal: 
-    m_lastTime: -8585239754161826459
-    List: []
+    m_lastTime: -8585239710516035131
+    List:
+    - name: Play_Scream_1
+      guid: 318112d43fb7ff49b7de1ab8c0772357
+      id: 3095429093
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: e7891270cb21784c8e77b9ee0aa68bd2
+      - ElementName: Play_Scream_1
+        ObjectType: 3
+        guid: 318112d43fb7ff49b7de1ab8c0772357
+      Path: Events\Default Work Unit\Play_Scream_1
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
@@ -404,7 +435,7 @@ MonoBehaviour:
     m_lastTime: -8585239754162946719
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 0a0000000b000000c5000000c6000000a5010000a6010000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0
