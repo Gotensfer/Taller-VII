@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo>
+	<Project Name="Wwise_Taller_VII" GUID="{81A21EFA-071C-4239-A977-2D5CECC83605}" Generator="2022.1.1.8100"/>
+	<CacheRoot>../../../../WwiseProject/Wwise_Taller_VII/.cache</CacheRoot>
+	<Platforms>
+		<Platform Name="Windows" GUID="{0BC0592E-9041-4D25-A8C9-E4ECF86A4696}" BasePlatform="Windows" BasePlatformGUID="{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}" Path="../../../../WwiseProject/Wwise_Taller_VII/GeneratedSoundBanks/Windows"/>
+	</Platforms>
+	<Languages>
+		<Language Name="English(US)" Id="684519430" GUID="{CB8B1CF4-E662-425C-83B5-A1F59A4D9265}" Default="true" UseAsStandIn="true"/>
+	</Languages>
+	<FileHash>{34F29CB2-24A8-E31F-5A19-043A162E9384}</FileHash>
+</ProjectInfo>

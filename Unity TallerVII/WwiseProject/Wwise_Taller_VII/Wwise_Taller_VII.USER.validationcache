@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ValidationCache Version="1" SchemaVersion="110">
-	<ValidationCacheItem File="F:\Juegos\Taller-VII\Unity TallerVII\WwiseProject\Wwise_Taller_VII\Wwise_Taller_VII.wproj" DateLow="1677637225" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Juegos\Taller-VII\Unity TallerVII\WwiseProject\Wwise_Taller_VII\Wwise_Taller_VII.wproj" DateLow="1677637622" DateHigh="0"/>
+	<ValidationCacheItem File="F:\Juegos\Taller-VII\Unity TallerVII\WwiseProject\Wwise_Taller_VII\Wwise_Taller_VII.USER.wsettings" DateLow="1677637377" DateHigh="0"/>
 	<ValidationCacheItem File="F:\Juegos\Taller-VII\Unity TallerVII\WwiseProject\Wwise_Taller_VII\Virtual Acoustics\Factory Acoustic Textures.wwu" DateLow="1676578276" DateHigh="0"/>
 	<ValidationCacheItem File="F:\Juegos\Taller-VII\Unity TallerVII\WwiseProject\Wwise_Taller_VII\Virtual Acoustics\Default Work Unit.wwu" DateLow="1677637225" DateHigh="0"/>
 	<ValidationCacheItem File="F:\Juegos\Taller-VII\Unity TallerVII\WwiseProject\Wwise_Taller_VII\Triggers\Default Work Unit.wwu" DateLow="1677637226" DateHigh="0"/>

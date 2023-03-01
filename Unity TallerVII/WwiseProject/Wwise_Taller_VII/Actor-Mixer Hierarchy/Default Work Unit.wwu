@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{838006E9-DD1A-4EBD-AA22-CD2CD48DEA3C}" SchemaVersion="110">
 	<AudioObjects>
-		<WorkUnit Name="Default Work Unit" ID="{838006E9-DD1A-4EBD-AA22-CD2CD48DEA3C}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{838006E9-DD1A-4EBD-AA22-CD2CD48DEA3C}" PersistMode="Standalone">
+			<ChildrenList>
+				<Sound Name="Scream 1" ID="{30D41135-0F9C-4E4F-B60F-0872F2908A48}" ShortID="666977568">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{494A03E7-7F5F-4F52-9447-7F41B20ABD62}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{3D7BAD81-350D-4534-B85B-A8910850A6AF}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Scream 1" ID="{498023E6-DA42-4446-B2F8-3F8139132FE2}">
+							<Language>SFX</Language>
+							<AudioFile>Scream 1.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="15856317"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="Scream 1" ID="{498023E6-DA42-4446-B2F8-3F8139132FE2}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+			</ChildrenList>
+		</WorkUnit>
 	</AudioObjects>
 </WwiseDocument>

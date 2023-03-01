@@ -3,6 +3,7 @@
 	<UserProjectSettingsInfo>
 		<UserProjectSettings Name="" ID="{47D1899C-3DB1-438A-BA35-70E546E95E5B}">
 			<PropertyList>
+				<Property Name="AudioFilesImporter\Path" Type="string" Value="F:\Audio\Taller VI\SFX Basicos\SFX Taller VI\Render\SFX Cacaleta\Mitosis\Screams\"/>
 				<Property Name="EventView\FilterMode1" Type="int32" Value="2"/>
 				<Property Name="EventView\FilterMode2" Type="int32" Value="2"/>
 				<Property Name="ExternalSourcesInputPath" Type="string">
