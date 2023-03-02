@@ -27,8 +27,6 @@ public class InputTesting : MonoBehaviour
         movementInput = movementInputValue;
     }
 
-    private void OnEnable()
-    {
-        InputActions.Enable();
-    }
+    private void OnEnable() { InputActions.Enable(); }
+    private void OnDisable() { InputActions.Disable(); }
 }
