@@ -40,6 +40,10 @@ public class AvatarController : MonoBehaviour
 
     private AvatarInput GetInputs(AvatarInput input)
     {
+        // Hay que testear con el sistema de movimiento si esto funciona porque estos datos arrojan un GetButton
+        // en vez de un GetButtonDown. La cosa es que no sé exactamente cómo se podría pasar así porque no hay un método
+        // que lo haga automático, habría que construir esa detección manualmente, pero por fuera del Set de Photon.
+        
         input.Buttons.Set(AvatarButtons.Jump, inputActions.Avatar.Jump.IsPressed());
         input.Buttons.Set(AvatarButtons.Crouch, inputActions.Avatar.Crouch.IsPressed());
         input.Buttons.Set(AvatarButtons.Dash, inputActions.Avatar.Dash.IsPressed());
