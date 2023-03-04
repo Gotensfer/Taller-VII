@@ -22,7 +22,12 @@ public class AvatarStats : NetworkBehaviour
     private bool isDead;
 
 
-    public UnityEvent onHit, onDeath, onHeal, onAddScore;
+    private UnityEvent onHit = new UnityEvent() ; public UnityEvent OnHit => OnHit;
+    private UnityEvent onDeath = new UnityEvent(); public UnityEvent OnDeath => onDeath;
+    private UnityEvent onHeal = new UnityEvent(); public UnityEvent OnHeal => onHeal;
+    private UnityEvent onAddScore = new UnityEvent(); public UnityEvent OnAddScore => OnAddScore;
+
+        //, onDeath, onHeal, onAddScore;
 
     public int Health { get => health;
         set 
@@ -57,7 +62,7 @@ public class AvatarStats : NetworkBehaviour
     {
         Score += 1;
         Debug.Log("score" +score);
-        onAddScore.Invoke();
+        //onAddScore.Invoke();
     }
     public void Die()
     {
@@ -72,9 +77,14 @@ public class AvatarStats : NetworkBehaviour
     {
         if (!isDead)
         {
-            health -= Damage;
+            health -= Mathf.Abs(Damage);
             onHit.Invoke();
-            Die();
+
+            if (health <= 0)
+            {
+                 Die();
+            }
+           
         }
         else Debug.Log("Anda Muerto");
         
