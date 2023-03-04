@@ -135,6 +135,7 @@ MonoBehaviour:
     type: 3}
   _prefabPhysxBall: {fileID: 483755123439468213, guid: 9aa714d01969e8747a92de905925b057,
     type: 3}
+  scream: {fileID: 5454256785432616221}
   timecount: 0
   _spawned:
     _value: 0
