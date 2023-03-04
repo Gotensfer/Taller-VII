@@ -65,6 +65,7 @@ MonoBehaviour:
   - {fileID: 2571668817891413686}
   - {fileID: 9074173701924591398}
   - {fileID: -4872339255647867100}
+  - {fileID: 5454256785432616221}
   SimulationBehaviours: []
 --- !u!143 &2571668817891413681
 CharacterController:
@@ -171,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94604dc4e988d3a4a8b73b17f59bbc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   test:
     idInternal: 0
     valueGuidInternal: 
