@@ -136,7 +136,7 @@
 				</AcousticTexture>
 			</AcousticTextures>
 		</SoundBank>
-		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{B81DFC62-438A-0F61-4D7B-95CCA9802E96}">
+		<SoundBank Id="3161908922" Type="User" Language="SFX" Hash="{46A9EC2E-A267-9388-D75B-C0300032E184}">
 			<ShortName>Main</ShortName>
 			<Path>Main.bnk</Path>
 			<Media>
@@ -146,7 +146,7 @@
 				</File>
 			</Media>
 			<Events>
-				<Event Id="3095429093" Name="Play_Scream_1" DurationType="OneShot" DurationMin="1.122517" DurationMax="1.122517">
+				<Event Id="3095429093" Name="Play_Scream_1" MaxAttenuation="20" DurationType="OneShot" DurationMin="1.122517" DurationMax="1.122517">
 					<MediaRefs>
 						<MediaRef Id="15856317"/>
 					</MediaRefs>
@@ -154,5 +154,5 @@
 			</Events>
 		</SoundBank>
 	</SoundBanks>
-	<FileHash>{9C93D59A-0369-2FA3-4292-8FF66FC6E612}</FileHash>
+	<FileHash>{DC820890-47E1-376F-73A6-C6042F5BCB46}</FileHash>
 </SoundBanksInfo>
