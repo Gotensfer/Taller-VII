@@ -9,7 +9,7 @@ public class Player : NetworkBehaviour
     [SerializeField] private Ball _prefabBall;
     [SerializeField] private PhysxBall _prefabPhysxBall;
     private Transform _camera;
-
+    [SerializeField] private PostScream scream;
 
     [Networked] private TickTimer delay { get; set; }
 
@@ -96,6 +96,7 @@ public class Player : NetworkBehaviour
             {
                 if ((data.buttons & NetworkInputData.MOUSEBUTTON1) != 0)
                 {
+                    scream.PostEvent();
                     delay = TickTimer.CreateFromSeconds(Runner, 0.5f);
                     Runner.Spawn(_prefabBall,
                       transform.position + _forward,

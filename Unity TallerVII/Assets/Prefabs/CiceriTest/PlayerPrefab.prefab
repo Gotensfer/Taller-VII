@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2571668817891413686}
   - component: {fileID: 9074173701924591398}
   - component: {fileID: -4872339255647867100}
+  - component: {fileID: 5454256785432616221}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: Untagged
@@ -134,6 +135,7 @@ MonoBehaviour:
     type: 3}
   _prefabPhysxBall: {fileID: 483755123439468213, guid: 9aa714d01969e8747a92de905925b057,
     type: 3}
+  timecount: 0
   _spawned:
     _value: 0
 --- !u!114 &-4872339255647867100
@@ -154,18 +156,23 @@ MonoBehaviour:
   speed: 0
   score: 0
   isDead: 0
-  onHit:
-    m_PersistentCalls:
-      m_Calls: []
-  onDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  onHeal:
-    m_PersistentCalls:
-      m_Calls: []
-  onAddScore:
-    m_PersistentCalls:
-      m_Calls: []
+--- !u!114 &5454256785432616221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2571668817891413687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94604dc4e988d3a4a8b73b17f59bbc2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  test:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 14891d0d0296e214a9f3718b007a69c6,
+      type: 2}
 --- !u!1 &3886533505640993299
 GameObject:
   m_ObjectHideFlags: 0
