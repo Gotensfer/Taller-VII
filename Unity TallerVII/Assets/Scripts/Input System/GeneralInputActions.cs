@@ -71,6 +71,24 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""9f4cab22-4c7c-46b1-8163-1bbad1328052"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""d4bdfdf8-9c68-48f5-812a-a2223020aaaa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -183,6 +201,28 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Pickup"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e9bce5ee-b728-45e4-a7ed-fc8f3b98afc4"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f47a0f5a-aa05-4836-b387-14b232f71991"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -213,6 +253,8 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
         m_Avatar_Crouch = m_Avatar.FindAction("Crouch", throwIfNotFound: true);
         m_Avatar_Dash = m_Avatar.FindAction("Dash", throwIfNotFound: true);
         m_Avatar_Pickup = m_Avatar.FindAction("Pickup", throwIfNotFound: true);
+        m_Avatar_Fire = m_Avatar.FindAction("Fire", throwIfNotFound: true);
+        m_Avatar_Reload = m_Avatar.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -277,6 +319,8 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Avatar_Crouch;
     private readonly InputAction m_Avatar_Dash;
     private readonly InputAction m_Avatar_Pickup;
+    private readonly InputAction m_Avatar_Fire;
+    private readonly InputAction m_Avatar_Reload;
     public struct AvatarActions
     {
         private @GeneralInputActions m_Wrapper;
@@ -286,6 +330,8 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Avatar_Crouch;
         public InputAction @Dash => m_Wrapper.m_Avatar_Dash;
         public InputAction @Pickup => m_Wrapper.m_Avatar_Pickup;
+        public InputAction @Fire => m_Wrapper.m_Avatar_Fire;
+        public InputAction @Reload => m_Wrapper.m_Avatar_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Avatar; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -310,6 +356,12 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
                 @Pickup.started -= m_Wrapper.m_AvatarActionsCallbackInterface.OnPickup;
                 @Pickup.performed -= m_Wrapper.m_AvatarActionsCallbackInterface.OnPickup;
                 @Pickup.canceled -= m_Wrapper.m_AvatarActionsCallbackInterface.OnPickup;
+                @Fire.started -= m_Wrapper.m_AvatarActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_AvatarActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_AvatarActionsCallbackInterface.OnFire;
+                @Reload.started -= m_Wrapper.m_AvatarActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_AvatarActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_AvatarActionsCallbackInterface.OnReload;
             }
             m_Wrapper.m_AvatarActionsCallbackInterface = instance;
             if (instance != null)
@@ -329,6 +381,12 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
                 @Pickup.started += instance.OnPickup;
                 @Pickup.performed += instance.OnPickup;
                 @Pickup.canceled += instance.OnPickup;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
             }
         }
     }
@@ -349,5 +407,7 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnPickup(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }
