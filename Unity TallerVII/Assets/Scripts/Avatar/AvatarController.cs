@@ -25,12 +25,17 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 
     [Networked] private NetworkButtons previousButtons { get; set; }
 
-    private void OnEnable()
+
+    private void Awake()
     {
         inputActions = new GeneralInputActions();
+    }
+
+    private void OnEnable()
+    {
         if (Runner != null)
         {
-            Debug.Log("OwO");
+            Debug.Log("Enabled");
             EnableInputs();
             Runner.AddCallbacks(this);
         }
@@ -39,7 +44,7 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
     public override void FixedUpdateNetwork()
     {
         if (GetInput<AvatarInput>(out var input)) UseInputs(input);
-    }
+    }   
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
@@ -49,10 +54,6 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 
     private AvatarInput GetInputs(AvatarInput input)
     {
-        // Hay que testear con el sistema de movimiento si esto funciona porque estos datos arrojan un GetButton
-        // en vez de un GetButtonDown. La cosa es que no sé exactamente cómo se podría pasar así porque no hay un método
-        // que lo haga automático, habría que construir esa detección manualmente, pero por fuera del Set de Photon.
-        
         input.Buttons.Set(AvatarButtons.Jump, inputActions.Avatar.Jump.IsPressed());
         input.Buttons.Set(AvatarButtons.Crouch, inputActions.Avatar.Crouch.IsPressed());
         input.Buttons.Set(AvatarButtons.Dash, inputActions.Avatar.Dash.IsPressed());
@@ -63,22 +64,22 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 
     private void UseInputs(AvatarInput input)
     {
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump)) { OnJumpAction.Invoke(); Debug.Log("Jump Pressed"); }
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump)) { OnJumpAction.Invoke(); }
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Crouch)) OnCrouchAction(isCrouched);
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) OnDashAction.Invoke();
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Pickup)) OnJumpAction.Invoke();
-        //if (input.DirectionalInput != Vector2.zero) OnMoveAction(input.DirectionalInput);     NullReference
-        Debug.Log(input.DirectionalInput); // Sí funciona el debug
-        // No están funcionando los WasPressed
+        if (input.DirectionalInput != Vector2.zero) OnMoveAction(input.DirectionalInput);
+        
         Debug.Log(input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump));
         previousButtons = input.Buttons;
     }
-    
+
     private void EnableInputs(){ inputActions.Avatar.Enable(); }
     private void DisableInputs(){ inputActions.Avatar.Disable(); }
     private void OnDisable()
     {
         DisableInputs();
+        Runner.RemoveCallbacks(this);
     }
 
     #region Not implemented interface methods

@@ -670,17 +670,17 @@ PrefabInstance:
     - target: {fileID: 8298284263921010727, guid: f8ce28083b41b0e4a8a29f5ee9f254ee,
         type: 3}
       propertyPath: Flags
-      value: 133633
+      value: 2561
       objectReference: {fileID: 0}
     - target: {fileID: 8298284263921010727, guid: f8ce28083b41b0e4a8a29f5ee9f254ee,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
-      value: 5782697733505399906
+      value: 1099435212801121404
       objectReference: {fileID: 0}
     - target: {fileID: 8298284263921010727, guid: f8ce28083b41b0e4a8a29f5ee9f254ee,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
-      value: -2483674813639349576
+      value: -5602427103193107805
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8ce28083b41b0e4a8a29f5ee9f254ee, type: 3}
