@@ -96,7 +96,7 @@ public class Player : NetworkBehaviour
             {
                 if ((data.buttons & NetworkInputData.MOUSEBUTTON1) != 0)
                 {
-                   // scream.PostEvent();
+                    scream.PostEvent();
                     delay = TickTimer.CreateFromSeconds(Runner, 1f);
                     Runner.Spawn(_prefabBall,
                       transform.position + _forward,
