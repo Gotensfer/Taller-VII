@@ -189,8 +189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_listeners:
-    initialListenerList: []
-    useDefaultListeners: 1
+    initialListenerList:
+    - {fileID: -2835461883900061317}
+    useDefaultListeners: 0
   isEnvironmentAware: 1
   isStaticObject: 0
   m_positionOffsetData:
@@ -210,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d127f8fe2a96114ab9197268b2ac832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDefaultListener: 1
+  isDefaultListener: 0
   listenerId: 0
 --- !u!1 &3886533505640993299
 GameObject:
