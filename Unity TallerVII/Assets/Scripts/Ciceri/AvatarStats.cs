@@ -8,23 +8,40 @@ public class AvatarStats : NetworkBehaviour
 {
     [SerializeField]
     private int health;
+
     [SerializeField]
     private int maxHealth;
+
     [SerializeField]
     private float speed;
+
     [SerializeField]
     private int score;
+
     [SerializeField]
     private bool isDead;
 
+
     public UnityEvent onHit, onDeath, onHeal, onAddScore;
 
-
-    public int Health { get => health; set => health = value; }
+    public int Health { get => health;
+        set 
+        {
+            if (Health <=maxHealth)
+            {
+                health = value;
+            }
+            else
+            {
+                health = maxHealth;
+            }          
+        }
+    }
     public int MaxHealth { get => maxHealth; }
     public float Speed { get => speed; set => speed = value; }
     public int Score { get => score; set => score = value; }
     public bool IsDead { get =>isDead ;  }
+    //pruebas de networked
 
     void Start()
     {
@@ -34,7 +51,7 @@ public class AvatarStats : NetworkBehaviour
         onHeal.AddListener(messageHealth);
         onAddScore.AddListener(messagePoint);
        
-        Debug.Log("la vida del compa "+ Health +"la velocidad "+ Speed+" puntaje "+ 0);
+        Debug.Log("la vida del compa "+ Health +" la velocidad "+ Speed+" puntaje "+ 0);
     }
     public void AddScore()
     {
@@ -53,23 +70,35 @@ public class AvatarStats : NetworkBehaviour
     }
     public void GetHit(int Damage)
     {
-        if (isDead)
+        if (!isDead)
         {
             health -= Damage;
             onHit.Invoke();
+            Die();
         }
         else Debug.Log("Anda Muerto");
         
 
     }
-    public void GetHeal(int Health)
+    public void GetHeal(int Heal)
     {
-        if (isDead)
+        if (!isDead)
         {
-            health += Health;
-            onHeal.Invoke();
+                        
+            if (Health == maxHealth && (Health+Heal) >=maxHealth)
+            {
+                Health = maxHealth;
+            }
+            else
+            {
+                Health += Heal;
+                onHeal.Invoke();
+            }
         }
     }
+
+    #region eventos temporales 
+    //eventos para sucribirse para practicas
     private void messageHit()
     {
         Debug.Log("te golpiaron y feo ");
@@ -87,5 +116,5 @@ public class AvatarStats : NetworkBehaviour
         Debug.Log("Ganaste puntos ");
     }
 
-
+    #endregion
 }

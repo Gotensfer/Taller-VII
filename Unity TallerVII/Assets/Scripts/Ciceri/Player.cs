@@ -10,17 +10,20 @@ public class Player : NetworkBehaviour
     [SerializeField] private PhysxBall _prefabPhysxBall;
     private Transform _camera;
 
+
     [Networked] private TickTimer delay { get; set; }
 
     private NetworkCharacterControllerPrototype _cc;
     private AvatarStats _cs;
     private Vector3 _forward;
     private Text _messages;
+    public float timecount;
     private void Awake()
     {
         _cc = GetComponent<NetworkCharacterControllerPrototype>();
         _cs = GetComponent<AvatarStats>();
         _forward = transform.forward;
+        timecount = 5;
     }
     private void LateUpdate()
     {
@@ -79,7 +82,15 @@ public class Player : NetworkBehaviour
             _cc.Move(5 * data.direction * Runner.DeltaTime);
 
             if (data.direction.sqrMagnitude > 0)
-                _forward = data.direction;
+            {
+             _forward = data.direction;
+            }
+            timecount -= Time.deltaTime;
+            if (!_cs.IsDead &&timecount<=0)
+            {
+                _cs.GetHeal(20);
+                timecount = 5;
+            }
 
             if (delay.ExpiredOrNotRunning(Runner))
             {
@@ -101,7 +112,7 @@ public class Player : NetworkBehaviour
                 else if ((data.buttons & NetworkInputData.MOUSEBUTTON2) != 0)
                 {
                     delay = TickTimer.CreateFromSeconds(Runner, 0.5f);
-                    
+                    _cs.GetHit(20);
                     Runner.Spawn(_prefabPhysxBall,
                       transform.position + _forward,
                       Quaternion.LookRotation(_forward),

@@ -150,9 +150,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   health: 100
-  MaxHealth: 200
-  Speed: 5
-  Score: 0
+  maxHealth: 200
+  speed: 0
+  score: 0
+  isDead: 0
   onHit:
     m_PersistentCalls:
       m_Calls: []
