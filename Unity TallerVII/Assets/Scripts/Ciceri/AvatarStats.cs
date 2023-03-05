@@ -33,7 +33,7 @@ public class AvatarStats : NetworkBehaviour
     public int MaxHealth { get => maxHealth; }
     public float Speed { get => speed; set => speed = value; }
 
-    public override void Spawned()
+    private void Start()
     {
         Health = MaxHealth;
         onHit.AddListener(messageHit);
