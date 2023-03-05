@@ -6,81 +6,65 @@ using UnityEngine.Events;
 
 public class AvatarStats : NetworkBehaviour
 {
-    [SerializeField]
-    private int health;
+    //variables normales 
 
-    [SerializeField]
-    private int maxHealth;
+    [SerializeField] private int maxHealth;
 
-    [SerializeField]
-    private float speed;
+    [SerializeField] private float speed;
 
-    [SerializeField]
-    private int score;
+    //variables  Networked
+    [Networked] public int Health { get; private set; }
 
-    [SerializeField]
-    private bool isDead;
+    [Networked] public int Score { get; private set; }
 
+    [Networked] public bool IsDead  { get; private set; }
 
-    private UnityEvent onHit = new UnityEvent() ; public UnityEvent OnHit => OnHit;
+    // Events 
+    #region UnityEvents   
+    private UnityEvent onHit = new UnityEvent(); public UnityEvent OnHit => OnHit;
     private UnityEvent onDeath = new UnityEvent(); public UnityEvent OnDeath => onDeath;
     private UnityEvent onHeal = new UnityEvent(); public UnityEvent OnHeal => onHeal;
     private UnityEvent onAddScore = new UnityEvent(); public UnityEvent OnAddScore => OnAddScore;
 
-        //, onDeath, onHeal, onAddScore;
-
-    public int Health { get => health;
-        set 
-        {
-            if (Health <=maxHealth)
-            {
-                health = value;
-            }
-            else
-            {
-                health = maxHealth;
-            }          
-        }
-    }
+    #endregion
+    //, onDeath, onHeal, onAddScore;
     public int MaxHealth { get => maxHealth; }
     public float Speed { get => speed; set => speed = value; }
-    public int Score { get => score; set => score = value; }
-    public bool IsDead { get =>isDead ;  }
     //pruebas de networked
 
     void Start()
     {
-        health = maxHealth;
+        Health = maxHealth;
         onHit.AddListener(messageHit);
         onDeath.AddListener(messageDie);
         onHeal.AddListener(messageHealth);
         onAddScore.AddListener(messagePoint);
        
-        Debug.Log("la vida del compa "+ Health +" la velocidad "+ Speed+" puntaje "+ 0);
+        Debug.Log("la vida del compa "+ Health + " la velocidad "+ Speed+" puntaje "+ 0);
     }
     public void AddScore()
     {
         Score += 1;
-        Debug.Log("score" +score);
-        //onAddScore.Invoke();
+        Debug.Log("score" +Score);
+        onAddScore.Invoke();
     }
     public void Die()
     {
-        if (health <= 0)
+        if (Health <= 0)
         {
-            isDead = true;
+            IsDead = true;
             onDeath.Invoke();
 
         }
     }
     public void GetHit(int Damage)
     {
-        if (!isDead)
+        if (!IsDead)
         {
-            health -= Mathf.Abs(Damage);
+            Health -= Mathf.Abs(Damage);
             onHit.Invoke();
 
-            if (health <= 0)
+            if (Health <= 0)
             {
                  Die();
             }
@@ -92,10 +76,10 @@ public class AvatarStats : NetworkBehaviour
     }
     public void GetHeal(int Heal)
     {
-        if (!isDead)
+        if (!IsDead)
         {
                         
-            if (Health == maxHealth && (Health+Heal) >=maxHealth)
+            if (Health == maxHealth && (Health + Heal) >=maxHealth)
             {
                 Health = maxHealth;
             }
@@ -105,6 +89,12 @@ public class AvatarStats : NetworkBehaviour
                 onHeal.Invoke();
             }
         }
+    }
+    //funcion temporal para Respawn
+    public void Respawn()
+    {
+        IsDead = false;
+        Health = 200;
     }
 
     #region eventos temporales 
@@ -125,6 +115,7 @@ public class AvatarStats : NetworkBehaviour
     {
         Debug.Log("Ganaste puntos ");
     }
+   
 
     #endregion
 }

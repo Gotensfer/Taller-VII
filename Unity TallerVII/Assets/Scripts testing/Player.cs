@@ -67,7 +67,7 @@ public class Player : NetworkBehaviour
     }
     public static void OnBallSpawned(Changed<Player> changed)
     {
-        changed.Behaviour.material.color = Color.black;
+        changed.Behaviour.material.color = Color.red;
 
     }
     public override void Render()
@@ -85,13 +85,18 @@ public class Player : NetworkBehaviour
             {
              _forward = data.direction;
             }
-            timecount -= Time.deltaTime;
+            timecount -= Runner.DeltaTime;
             if (!_cs.IsDead &&timecount<=0)
             {
                 _cs.GetHeal(20);
                 timecount = 5;
+               
             }
-
+            if (_cs.IsDead)
+            {
+                dead();
+                
+            }
             if (delay.ExpiredOrNotRunning(Runner))
             {
                 if ((data.buttons & NetworkInputData.MOUSEBUTTON1) != 0)
@@ -105,14 +110,15 @@ public class Player : NetworkBehaviour
                       {
               // Initialize the Ball before synchronizing it
               o.GetComponent<Ball>().Init();
+                          _cs.AddScore();
                       });
-                    _cs.AddScore();
-                    spawned = !spawned;
+                    
+             
                 }
                 else if ((data.buttons & NetworkInputData.MOUSEBUTTON2) != 0)
                 {
                     delay = TickTimer.CreateFromSeconds(Runner, 0.5f);
-                    _cs.GetHit(20);
+                   
                     Runner.Spawn(_prefabPhysxBall,
                       transform.position + _forward,
                       Quaternion.LookRotation(_forward),
@@ -120,11 +126,17 @@ public class Player : NetworkBehaviour
                       (runner, o) =>
                       {
                           o.GetComponent<PhysxBall>().Init(20 * _forward);
-                          
+                          _cs.GetHit(20);
+
                       });
                     spawned = !spawned;
                 }
             }
         }
+    }
+    public void dead()
+    {
+        transform.position=new Vector3(0,10,0);
+        _cs.Respawn();
     }
 }
