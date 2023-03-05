@@ -101,7 +101,6 @@ public class Player : NetworkBehaviour
             {
                 if ((data.buttons & NetworkInputData.MOUSEBUTTON1) != 0)
                 {
-                    scream.PostEvent();
                     delay = TickTimer.CreateFromSeconds(Runner, 1f);
                     Runner.Spawn(_prefabBall,
                       transform.position + _forward,
@@ -113,9 +112,11 @@ public class Player : NetworkBehaviour
               o.GetComponent<Ball>().Init();
                         
                       });
-                    _cs.AddScore();
-
-
+                    if (Object.HasStateAuthority)
+                    {
+                        scream.PostEvent();
+                        _cs.AddScore();
+                    }
                 }
                 else if ((data.buttons & NetworkInputData.MOUSEBUTTON2) != 0)
                 {
@@ -131,6 +132,7 @@ public class Player : NetworkBehaviour
                     spawned = !spawned;
                     if (Object.HasStateAuthority)
                     {
+                        scream.PostEvent();
                         _cs.GetHit(20);
                     }
                     
