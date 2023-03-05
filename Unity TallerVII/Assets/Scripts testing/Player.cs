@@ -9,7 +9,7 @@ public class Player : NetworkBehaviour
     [SerializeField] private Ball _prefabBall;
     [SerializeField] private PhysxBall _prefabPhysxBall;
     private Transform _camera;
-    [Networked] public PostScream scream { get; set; }
+    [SerializeField] public PostScream scream;
 
     [Networked] private TickTimer delay { get; set; }
 
