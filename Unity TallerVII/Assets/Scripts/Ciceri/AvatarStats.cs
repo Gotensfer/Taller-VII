@@ -24,15 +24,16 @@ public class AvatarStats : NetworkBehaviour
     private UnityEvent onHit = new UnityEvent(); public UnityEvent OnHit => OnHit;
     private UnityEvent onDeath = new UnityEvent(); public UnityEvent OnDeath => onDeath;
     private UnityEvent onHeal = new UnityEvent(); public UnityEvent OnHeal => onHeal;
-    private UnityEvent onAddScore = new UnityEvent(); public UnityEvent OnAddScore => OnAddScore;
+    private UnityEvent onAddScore = new UnityEvent(); public UnityEvent OnAddScore => onAddScore;
 
     #endregion
     //, onDeath, onHeal, onAddScore;
+
+    // 
     public int MaxHealth { get => maxHealth; }
     public float Speed { get => speed; set => speed = value; }
-    //pruebas de networked
 
-    void Start()
+    public override void Spawned()
     {
         Health = maxHealth;
         onHit.AddListener(messageHit);
@@ -105,6 +106,7 @@ public class AvatarStats : NetworkBehaviour
     }
     private void messageDie()
     {
+        Score = 0;
         Debug.Log("Moriste ");
     }
     private void messageHealth()
