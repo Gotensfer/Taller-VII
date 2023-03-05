@@ -112,8 +112,10 @@ public class Player : NetworkBehaviour
               o.GetComponent<Ball>().Init();
                         
                       });
-                    _cs.AddScore();
-
+                    if (Object.HasStateAuthority)
+                    {
+                        _cs.AddScore();
+                    }
 
                 }
                 else if ((data.buttons & NetworkInputData.MOUSEBUTTON2) != 0)
