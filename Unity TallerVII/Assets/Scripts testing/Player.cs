@@ -111,26 +111,30 @@ public class Player : NetworkBehaviour
                       {
               // Initialize the Ball before synchronizing it
               o.GetComponent<Ball>().Init();
-                          _cs.AddScore();
+                        
                       });
-                    
-             
+                    _cs.AddScore();
+
+
                 }
                 else if ((data.buttons & NetworkInputData.MOUSEBUTTON2) != 0)
                 {
                     delay = TickTimer.CreateFromSeconds(Runner, 0.5f);
                    
-                    Runner.Spawn(_prefabPhysxBall,
-                      transform.position + _forward,
-                      Quaternion.LookRotation(_forward),
-                      Object.InputAuthority,
+                    Runner.Spawn(_prefabPhysxBall,transform.position + _forward,Quaternion.LookRotation(_forward),Object.InputAuthority,
                       (runner, o) =>
                       {
                           o.GetComponent<PhysxBall>().Init(20 * _forward);
-                          _cs.GetHit(20);
+                        
 
                       });
                     spawned = !spawned;
+                    if (Object.HasStateAuthority)
+                    {
+                        _cs.GetHit(20);
+                    }
+                    
+
                 }
             }
         }
