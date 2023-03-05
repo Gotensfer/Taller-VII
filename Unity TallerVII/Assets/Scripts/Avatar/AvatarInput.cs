@@ -12,8 +12,7 @@ public enum AvatarButtons
 }
 public struct AvatarInput : INetworkInput
 {
-    private Vector2 directionalInput;
-    public Vector2 DirectionalInput { get => directionalInput; set => directionalInput = value; }
-    
+    public Vector2 DirectionalInput;
     public NetworkButtons Buttons;
 }
+
