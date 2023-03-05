@@ -35,7 +35,7 @@ public class AvatarStats : NetworkBehaviour
 
     public override void Spawned()
     {
-        Health = maxHealth;
+        Health = MaxHealth;
         onHit.AddListener(messageHit);
         onDeath.AddListener(messageDie);
         onHeal.AddListener(messageHealth);
