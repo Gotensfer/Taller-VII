@@ -50,7 +50,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 90
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -143,11 +143,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 2
-  jumpHeight: 1.2
+  jumpHeight: 1
   crouchSpeed: 0
   crouchHeight: 1.5
   dashTime: 0
-  dashDistance: 0
+  dashDistance: 20
   movementSpeed: 1
 --- !u!1 &4749319528492988755
 GameObject:
