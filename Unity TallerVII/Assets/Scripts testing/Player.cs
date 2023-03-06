@@ -37,7 +37,7 @@ public class Player : NetworkBehaviour
     {
         if (Object.HasInputAuthority && Input.GetKeyDown(KeyCode.R))
         {
-            RPC_SendMessage("Hey Mate!");
+            
 
         }
     }
@@ -119,7 +119,8 @@ public class Player : NetworkBehaviour
                       });
                     if (Object.HasStateAuthority)
                     {
-                     //   scream.PostEvent();
+                        RPC_SendMessage("Disparo");
+                        //   scream.PostEvent();
                         _cs.AddScore();
                     }
                 }
@@ -137,7 +138,8 @@ public class Player : NetworkBehaviour
                     spawned = !spawned;
                     if (Object.HasStateAuthority)
                     {
-                     //   scream.PostEvent();
+                       
+                        //   scream.PostEvent();
                         _cs.GetHit(20);
                     }
                     
