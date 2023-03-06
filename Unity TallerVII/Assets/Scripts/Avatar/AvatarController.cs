@@ -47,13 +47,14 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
             EnableInputs();
             Runner.AddCallbacks(this);
         }
-
-        onMoveAction += Move;
     }
 
     public override void FixedUpdateNetwork()
     {
-        if (GetInput<AvatarInput>(out var input)) UseInputs(input);
+        if (GetInput<AvatarInput>(out var input))
+        {
+            UseInputs(input);
+        }
     }   
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -78,10 +79,8 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Crouch)) onCrouchAction(isCrouched);
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) onDashAction.Invoke();
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Pickup)) onPickupAction.Invoke();
+        onMoveAction(input.DirectionalInput);
 
-        Move(input.DirectionalInput);
-        
-        //Debug.Log(input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump));
         previousButtons = input.Buttons;
     }
 
@@ -91,22 +90,6 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
     {
         DisableInputs();
         Runner.RemoveCallbacks(this);
-    }
-
-    void MethodTest()
-    {
-        print("Simon");
-    }
-
-    void Move(Vector2 directionalInput)
-    {
-        if (directionalInput.sqrMagnitude > 0)
-        {
-            Vector3 movementDirection = new Vector3(directionalInput.x, 0, directionalInput.y).normalized;
-            Vector3 movementVector = movementDirection * 1 * Runner.DeltaTime;
-
-            cc.Move(movementVector);
-        }
     }
 
     #region Not implemented interface methods

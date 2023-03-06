@@ -38,13 +38,10 @@ public class AvatarMovement : NetworkBehaviour
 
     void Move(Vector2 directionalInput)
     {
-        if (directionalInput.sqrMagnitude > 0)
-        {
-            Vector3 movementDirection = new Vector3(directionalInput.x, 0, directionalInput.y).normalized;
-            Vector3 movementVector = movementDirection * movementSpeed * Runner.DeltaTime;
+        Vector3 movementDirection = new Vector3(directionalInput.x, 0, directionalInput.y).normalized;
+        Vector3 movementVector = movementDirection * movementSpeed * Runner.DeltaTime;
 
-            cc.Move(movementVector);
-        }
+        cc.Move(movementVector);
     }
 
     void Crouch(bool toCrouch)
