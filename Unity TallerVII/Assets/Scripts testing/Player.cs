@@ -106,6 +106,7 @@ public class Player : NetworkBehaviour
             {
                 if ((data.buttons & NetworkInputData.MOUSEBUTTON1) != 0)
                 {
+                    RPC_SendMessage("Disparo");
                     delay = TickTimer.CreateFromSeconds(Runner, 1f);
                     Runner.Spawn(_prefabBall,
                       transform.position + _forward,
@@ -119,7 +120,7 @@ public class Player : NetworkBehaviour
                       });
                     if (Object.HasStateAuthority)
                     {
-                        RPC_SendMessage("Disparo");
+                        
                         //   scream.PostEvent();
                         _cs.AddScore();
                     }
@@ -135,6 +136,7 @@ public class Player : NetworkBehaviour
                         
 
                       });
+
                     spawned = !spawned;
                     if (Object.HasStateAuthority)
                     {
