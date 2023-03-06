@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(AvatarController))]
 public class AvatarMovement : NetworkBehaviour
 {
     [SerializeField] float jumpHeight = 1;
@@ -25,58 +26,25 @@ public class AvatarMovement : NetworkBehaviour
     private void Awake()
     {
         cc = GetComponent<NetworkCharacterControllerPrototype>();
+        AvatarController avatarController = GetComponent<AvatarController>();
+
+        avatarController.OnMoveAction += Move;
+        avatarController.OnJumpAction.AddListener(Jump);
+        avatarController.OnCrouchAction += Crouch;
+        avatarController.OnDashAction.AddListener(Dash);
 
         standingHeight = cc.Controller.height;
     }
 
     void Move(Vector2 directionalInput)
     {
-        Vector3 movementDirection = new Vector3(directionalInput.x, 0, directionalInput.y).normalized;
-        Vector3 movementVector = movementDirection * movementSpeed;
-
-        cc.Move(movementVector);
-    }
-
-    public override void FixedUpdateNetwork()
-    {
-        Vector2 inputDirection = new();
-
-        if (Keyboard.current[Key.W].isPressed)
+        if (directionalInput.sqrMagnitude > 0)
         {
-            inputDirection += Vector2.up;
-        }
+            Vector3 movementDirection = new Vector3(directionalInput.x, 0, directionalInput.y).normalized;
+            Vector3 movementVector = movementDirection * movementSpeed * Runner.DeltaTime;
 
-        if (Keyboard.current[Key.S].isPressed)
-        {
-            inputDirection += Vector2.down;
+            cc.Move(movementVector);
         }
-
-        if (Keyboard.current[Key.A].isPressed)
-        {
-            inputDirection += Vector2.left;
-        }
-
-        if (Keyboard.current[Key.D].isPressed)
-        {
-            inputDirection += Vector2.right;
-        }
-
-        if (Keyboard.current[Key.Space].isPressed)
-        {
-            Jump();
-        }
-
-        if (Keyboard.current[Key.X].isPressed)
-        {
-            Crouch(true);
-        }
-
-        if (Keyboard.current[Key.C].isPressed)
-        {
-            Crouch(false);
-        }
-
-        Move(inputDirection);
     }
 
     void Crouch(bool toCrouch)
@@ -113,5 +81,6 @@ public class AvatarMovement : NetworkBehaviour
     void Dash() // 2m
     {
         cc.Velocity = cc.Transform.forward * dashDistance;
+        print("Dash?");
     }
 }

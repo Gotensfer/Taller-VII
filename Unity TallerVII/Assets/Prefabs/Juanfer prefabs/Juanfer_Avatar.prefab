@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4441668973356787565}
   - component: {fileID: 4441668973356787564}
   - component: {fileID: 4441668973356787567}
+  - component: {fileID: 774711644492296225}
   - component: {fileID: 2335474975820820402}
   m_Layer: 0
   m_Name: Juanfer_Avatar
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 2
   InterpolationSpace: 0
   InterpolationTarget: {fileID: 5515067646340610663}
   InterpolateErrorCorrection: 1
@@ -113,8 +114,22 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 4441668973356787564}
+  - {fileID: 774711644492296225}
   - {fileID: 2335474975820820402}
   SimulationBehaviours: []
+--- !u!114 &774711644492296225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4441668973356787566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24296055c635b1d469137175c48625a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!114 &2335474975820820402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0232a5aaa0472f94ea405873b8d3fd8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 2
   jumpHeight: 1.2
   crouchSpeed: 0
   crouchHeight: 1.5
