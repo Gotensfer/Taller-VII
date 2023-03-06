@@ -38,16 +38,21 @@ public class Player : NetworkBehaviour
         if (Object.HasInputAuthority && Input.GetKeyDown(KeyCode.R))
         {
             RPC_SendMessage("Hey Mate!");
+
         }
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
     public void RPC_SendMessage(string message, RpcInfo info = default)
     {
+        scream.PostEvent();
         if (_messages == null)
             _messages = FindObjectOfType<Text>();
         if (info.IsInvokeLocal)
+        { 
             message = $"You said: {message}\n";
+        
+        }
         else
             message = $"Some other player said: {message}\n";
         _messages.text += message;
@@ -114,7 +119,7 @@ public class Player : NetworkBehaviour
                       });
                     if (Object.HasStateAuthority)
                     {
-                        scream.PostEvent();
+                     //   scream.PostEvent();
                         _cs.AddScore();
                     }
                 }
@@ -132,7 +137,7 @@ public class Player : NetworkBehaviour
                     spawned = !spawned;
                     if (Object.HasStateAuthority)
                     {
-                        scream.PostEvent();
+                     //   scream.PostEvent();
                         _cs.GetHit(20);
                     }
                     
