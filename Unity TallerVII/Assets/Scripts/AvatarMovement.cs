@@ -112,6 +112,6 @@ public class AvatarMovement : NetworkBehaviour
 
     void Dash() // 2m
     {
-
+        cc.Velocity = cc.Transform.forward * dashDistance;
     }
 }
