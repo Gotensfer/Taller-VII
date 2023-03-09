@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378411a89480da345945c2f888327a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 2
+  _interpolationDataSource: 3
   InterpolationSpace: 0
   InterpolationTarget: {fileID: 5515067646340610663}
   InterpolateErrorCorrection: 1
@@ -88,7 +88,7 @@ MonoBehaviour:
   acceleration: 10
   braking: 10
   maxSpeed: 2
-  rotationSpeed: 15
+  rotationSpeed: 0
   _IsGrounded: 0
   _Velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &4441668973356787567
@@ -146,9 +146,11 @@ MonoBehaviour:
   jumpHeight: 1
   crouchSpeed: 0
   crouchHeight: 1.5
-  dashTime: 0
-  dashDistance: 20
-  movementSpeed: 1
+  dashTime: 0.2
+  dashCooldown: 1
+  dashForce: 40
+  movementSpeed: 2
+  bodyRepresentation: {fileID: 4749319528492988755}
 --- !u!1 &4749319528492988755
 GameObject:
   m_ObjectHideFlags: 0
