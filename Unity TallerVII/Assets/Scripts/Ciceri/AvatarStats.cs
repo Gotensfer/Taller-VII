@@ -19,6 +19,8 @@ public class AvatarStats : NetworkBehaviour
     [Networked(OnChanged = nameof(ChangeName))]
     public NetworkString<_32> Name { get; set; }
     //variables  Networked
+
+    [Networked] public int Token { get;  set; }
     [Networked] public int Health { get; private set; }
 
     [Networked] public int Score { get; private set; }
