@@ -74,7 +74,7 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
   public virtual void Jump(bool ignoreGrounded = false, float? overrideImpulse = null) {
     if (IsGrounded || ignoreGrounded) {
       var newVel = Velocity;
-      newVel.y += overrideImpulse ?? jumpImpulse;
+      newVel.y = overrideImpulse ?? jumpImpulse; // Originalmente esto era +=, se cambio para un salto absoluto
       Velocity =  newVel;
     }
   }

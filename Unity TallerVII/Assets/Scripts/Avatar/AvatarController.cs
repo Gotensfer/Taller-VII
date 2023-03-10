@@ -10,10 +10,18 @@ using UnityEngine.Events;
 [RequireComponent(typeof(NetworkObject))]
 public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 {
-    private Action<Vector2> onMoveAction; public Action<Vector2> OnMoveAction => onMoveAction;
-    private Action<bool> onCrouchAction; public Action<bool> OnCrouchAction => onCrouchAction;
-    private UnityEvent onJumpAction = new UnityEvent(); public UnityEvent OnJumpAction => onJumpAction;
-    private UnityEvent onDashAction = new UnityEvent(); public UnityEvent OnDashAction => onDashAction;
+    private Action<Vector2> onMoveAction;
+    public Action<Vector2> OnMoveAction { get => onMoveAction; set => onMoveAction = value; }
+
+    private Action<bool> onCrouchAction;
+    public Action<bool> OnCrouchAction { get => onCrouchAction; set => onCrouchAction = value; }
+
+    private UnityEvent onJumpAction = new UnityEvent();
+    public UnityEvent OnJumpAction { get => onJumpAction; set => onJumpAction = value; }
+
+    private UnityEvent onDashAction = new UnityEvent();
+    public UnityEvent OnDashAction { get => onDashAction; set => onDashAction = value; }
+
     private UnityEvent onFireAction = new UnityEvent(); public UnityEvent OnFireAction => onFireAction;
     private UnityEvent onReloadAction = new UnityEvent(); public UnityEvent OnReloadAction => onReloadAction;
     private UnityEvent onPickupAction = new UnityEvent(); public UnityEvent OnPickupAction => onPickupAction;
@@ -25,15 +33,15 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 
     [Networked] private NetworkButtons previousButtons { get; set; }
 
+    NetworkCharacterControllerPrototype cc;
 
-    private void Awake()
+    public override void Spawned()
     {
         inputActions = new GeneralInputActions();
-    }
 
-    private void OnEnable()
-    {
-        if (Runner != null)
+        cc = GetComponent<NetworkCharacterControllerPrototype>();
+
+        if (Object.HasInputAuthority)
         {
             Debug.Log("Enabled");
             EnableInputs();
@@ -43,7 +51,10 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 
     public override void FixedUpdateNetwork()
     {
-        if (GetInput<AvatarInput>(out var input)) UseInputs(input);
+        if (GetInput<AvatarInput>(out var input))
+        {
+            UseInputs(input);
+        }
     }   
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -64,13 +75,12 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 
     private void UseInputs(AvatarInput input)
     {
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump)) { OnJumpAction.Invoke(); }
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Crouch)) OnCrouchAction(isCrouched);
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) OnDashAction.Invoke();
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Pickup)) OnJumpAction.Invoke();
-        if (input.DirectionalInput != Vector2.zero) OnMoveAction(input.DirectionalInput);
-        
-        Debug.Log(input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump));
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump)) { onJumpAction.Invoke(); }
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Crouch)) onCrouchAction(isCrouched);
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) onDashAction.Invoke();
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Pickup)) onPickupAction.Invoke();
+        onMoveAction(input.DirectionalInput);
+
         previousButtons = input.Buttons;
     }
 
