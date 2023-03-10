@@ -104,8 +104,11 @@ public class Spawn : MonoBehaviour, INetworkRunnerCallbacks
                 NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
                 // Keep track of the player avatars so we can remove it when they disconnect
                 _spawnedCharacters.Add(player, networkPlayerObject);
-                networkPlayerObject.GetComponent<PlayerStats>().GetComponent<AvatarStats>().Token = playerToken;
-                //networkPlayerObject.GetComponent<AvatarStats>().Token = playerToken;
+                //si se llega a hacer con avatarStarts y no con playerStats
+                //networkPlayerObject.GetComponent<PlayerStats>().GetComponent<AvatarStats>().Token = playerToken;
+                networkPlayerObject.GetComponent<AvatarStats>().Token = playerToken;
+                //si se va a hacer con el playerStats y no directamente 
+               // networkPlayerObject.GetComponent<PlayerStats>().Token = playerToken;
                 mapTokenIDWithNetworkPlayer[playerToken] = networkPlayerObject;
 
             }

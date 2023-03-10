@@ -12,6 +12,7 @@ public class AvatarStats : NetworkBehaviour
     public TextMeshProUGUI playerName;
 
     [Networked] public PlayerStats Player { get; set; }
+
     [SerializeField] private int maxHealth;
 
     [SerializeField] private float speed;

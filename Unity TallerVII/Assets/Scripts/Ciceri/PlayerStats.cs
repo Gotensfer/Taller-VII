@@ -16,24 +16,31 @@ public class PlayerStats : NetworkBehaviour
      * */
     [SerializeField] public AvatarStats avatar;
     private AvatarStats _avatar;
-
+    [Networked] public bool start { get; set; } 
     public PlayerStats Local { set; get; }
     [Networked(OnChanged = nameof(ChangeName))]
+
     public NetworkString<_32> Name { get; set; }
     [Networked] public Color Color { get; set; }
     [Networked] public NetworkBool Ready { get; set; }
     [Networked] public NetworkBool DoneLoading { get; set; }
+    [Networked] public int Token { get; set; }
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
     public override void FixedUpdateNetwork()
     {
-        if (HasStateAuthority && _avatar == null)
+        if (_avatar == null )
         {
             _avatar = Runner.Spawn(avatar, transform.position, transform.rotation, Object.InputAuthority, (runner, o) =>
              {
                  AvatarStats Avatar = o.GetComponent<AvatarStats>();
                  Debug.Log($"Created Character for Player {Name}");
                  Avatar.Player = this;
+               
              });
         }
 
@@ -70,6 +77,11 @@ public class PlayerStats : NetworkBehaviour
     {
         print("[RPC]cambio de nombre " + Name);
         this.Name = Name;
+
+    }
+    public void starEffec()
+    {
+        start = true;
 
     }
 
