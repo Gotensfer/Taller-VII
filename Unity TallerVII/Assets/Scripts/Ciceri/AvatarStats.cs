@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using UnityEngine.Events;
+using TMPro;
 
 public class AvatarStats : NetworkBehaviour
 {
     //variables normales 
 
+    public TextMeshProUGUI playerName;
+
+
     [SerializeField] private int maxHealth;
 
     [SerializeField] private float speed;
 
+    [Networked(OnChanged = nameof(ChangeName))]
+    public NetworkString<_32> Name { get; set; }
     //variables  Networked
     [Networked] public int Health { get; private set; }
 
     [Networked] public int Score { get; private set; }
 
-    [Networked] public bool IsDead  { get; private set; }
+    [Networked] public bool IsDead { get; private set; }
 
     // Events 
     #region UnityEvents   
@@ -33,20 +39,22 @@ public class AvatarStats : NetworkBehaviour
     public int MaxHealth { get => maxHealth; }
     public float Speed { get => speed; set => speed = value; }
 
-    private void Start()
+    public override void Spawned()
     {
+        // RPC_SetName(PlayerPrefs.GetString("PlayerName"));
         Health = MaxHealth;
         onHit.AddListener(messageHit);
         onDeath.AddListener(messageDie);
         onHeal.AddListener(messageHealth);
         onAddScore.AddListener(messagePoint);
-       
-        Debug.Log("la vida del compa "+ Health + " la velocidad "+ Speed+" puntaje "+ 0);
+
+        RPC_SetName(PlayerPrefs.GetString("PlayerName"));
+        Debug.Log("la vida del compa " + Health + " la velocidad " + Speed + " puntaje " + 0);
     }
     public void AddScore()
     {
         Score += 1;
-        Debug.Log("score" +Score);
+        Debug.Log("score" + Score);
         onAddScore.Invoke();
     }
     public void Die()
@@ -67,20 +75,20 @@ public class AvatarStats : NetworkBehaviour
 
             if (Health <= 0)
             {
-                 Die();
+                Die();
             }
-           
+
         }
         else Debug.Log("Anda Muerto");
-        
+
 
     }
     public void GetHeal(int Heal)
     {
         if (!IsDead)
         {
-                        
-            if (Health == maxHealth && (Health + Heal) >=maxHealth)
+
+            if (Health == maxHealth && (Health + Heal) >= maxHealth)
             {
                 Health = maxHealth;
             }
@@ -117,7 +125,24 @@ public class AvatarStats : NetworkBehaviour
     {
         Debug.Log("Ganaste puntos ");
     }
-   
+
 
     #endregion
+
+    static void ChangeName(Changed<AvatarStats> changed)
+    {
+        print("cambio de nombre " + changed.Behaviour.Name);
+        changed.Behaviour.changeName();
+    }
+    private void changeName()
+    {
+        playerName.text = Name.ToString();
+    }
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    private void RPC_SetName(string Name, RpcInfo info = default)
+    {
+        print("[RPC]cambio de nombre " + Name);
+        this.Name = Name;
+
+    }
 }
