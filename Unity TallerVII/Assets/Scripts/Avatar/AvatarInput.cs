@@ -13,6 +13,8 @@ public enum AvatarButtons
 public struct AvatarInput : INetworkInput
 {
     public Vector2 DirectionalInput;
+    public Vector2 AimInput;
+    public Vector3 ForwardVector;
     public NetworkButtons Buttons;
 }
 

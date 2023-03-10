@@ -12,7 +12,10 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 {
     private Action<Vector2> onMoveAction;
     public Action<Vector2> OnMoveAction { get => onMoveAction; set => onMoveAction = value; }
-
+    
+    private Action<Vector2, Vector3> onAimAction;
+    public Action<Vector2, Vector3> OnAimAction { get => onAimAction; set => onAimAction = value; }
+    
     private Action<bool> onCrouchAction;
     public Action<bool> OnCrouchAction { get => onCrouchAction; set => onCrouchAction = value; }
 
@@ -70,6 +73,7 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
         input.Buttons.Set(AvatarButtons.Dash, inputActions.Avatar.Dash.IsPressed());
         input.Buttons.Set(AvatarButtons.Pickup, inputActions.Avatar.Pickup.IsPressed());
         input.DirectionalInput = inputActions.Avatar.Move.ReadValue<Vector2>();
+        input.AimInput = inputActions.Avatar.Aim.ReadValue<Vector2>();
         return input;
     }
 
@@ -80,6 +84,7 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) onDashAction.Invoke();
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Pickup)) onPickupAction.Invoke();
         onMoveAction(input.DirectionalInput);
+        onAimAction(input.AimInput, input.ForwardVector);
 
         previousButtons = input.Buttons;
     }
