@@ -150,5 +150,16 @@ public class Spawn : MonoBehaviour, INetworkRunnerCallbacks
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
     {
     }
+    public void OnHostMigrationClean()
+    {
+        foreach (KeyValuePair<int, NetworkObject> entry in mapTokenIDWithNetworkPlayer)
+        {
+            NetworkObject networkObject = entry.Value.GetComponent<NetworkObject>();
+            if (networkObject.InputAuthority.IsNone)
+            {
+                networkObject.Runner.Despawn(networkObject);
+            }
+        }
+    }
 
 }

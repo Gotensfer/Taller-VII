@@ -90,6 +90,14 @@ public class StartSession : MonoBehaviour
                     });
             }
         }
+        StartCoroutine(CLeanUpHost());
         print("se completo el hostMigration");
+    }
+    IEnumerator CLeanUpHost()
+    {
+        yield return new WaitForSeconds(3.5f);
+
+        FindObjectOfType<Spawn>().OnHostMigrationClean();
+
     }
 }
