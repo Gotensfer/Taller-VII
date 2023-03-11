@@ -13,17 +13,27 @@ public class StartSession : MonoBehaviour
     [SerializeField] public NetworkRunner NetworkRunnerPrefab;
     NetworkRunner networkRunner;
 
-    [Networked] public NetworkString<_32> Name { get; set; }
-    [Networked] public Color Color { get; set; }
-    [Networked] public NetworkBool Ready { get; set; }
-    [Networked] public NetworkBool DoneLoading { get; set; }
+    private void Awake()
+    {
+        NetworkRunner netwoekRunnerInScene = FindObjectOfType<NetworkRunner>();
+        //si ya exite runner se pasara y no se creara otro
+        if (netwoekRunnerInScene != null)
+            networkRunner = netwoekRunnerInScene;
+    }
 
     private void Start()
     {
-        networkRunner = Instantiate(NetworkRunnerPrefab);
-        networkRunner.name = "Seccion";
-        var clientTask = InitialNetworkRunner(networkRunner, GameMode.AutoHostOrClient,GameManager.instance.GetconnectionToken(), NetAddress.Any(), SceneManager.GetActiveScene().buildIndex, null);
-        print("servidor funcionando");
+        if (networkRunner == null)
+        {
+            networkRunner = Instantiate(NetworkRunnerPrefab);
+            networkRunner.name = "Seccion";
+            if (SceneManager.GetActiveScene().name != "MainMenu")
+            {
+                var clientTask = InitialNetworkRunner(networkRunner, GameMode.AutoHostOrClient,"TestSession", GameManager.instance.GetconnectionToken(), NetAddress.Any(), SceneManager.GetActiveScene().buildIndex, null);
+            }
+            print("servidor funcionando");
+        }
+        
     }
 
     public void StarHostMigration(HostMigrationToken hostMigrationToken)
@@ -43,7 +53,7 @@ public class StartSession : MonoBehaviour
         return sceneManager;
     }
     // Update is called once per frame
-    protected virtual Task InitialNetworkRunner(NetworkRunner runner, GameMode gameMode,byte[] connectionToken, NetAddress address, SceneRef scene, Action<NetworkRunner> initialized)
+    protected virtual Task InitialNetworkRunner(NetworkRunner runner, GameMode gameMode,string sessionName ,byte[] connectionToken, NetAddress address, SceneRef scene, Action<NetworkRunner> initialized)
     {
         var sceneManager = GetSceneManager(runner);
         runner.ProvideInput = true;
@@ -52,7 +62,8 @@ public class StartSession : MonoBehaviour
             GameMode = gameMode,
             Address = address,
             Scene = scene,
-            SessionName = "TestRoom",
+            SessionName = sessionName,
+            CustomLobbyName = "OurLobbyID",
             Initialized = initialized,
             SceneManager = sceneManager,
             ConnectionToken = connectionToken
@@ -74,6 +85,7 @@ public class StartSession : MonoBehaviour
     void HostMigrationResume(NetworkRunner runner)
     {
         print("comenzo el hostMIgrationResumen");
+
         foreach (var resumenObjet in runner.GetResumeSnapshotNetworkObjects())
         {
             if (resumenObjet.TryGetBehaviour<NetworkCharacterControllerPrototype>(out var charaCharacterController))
@@ -91,6 +103,7 @@ public class StartSession : MonoBehaviour
             }
         }
         StartCoroutine(CLeanUpHost());
+
         print("se completo el hostMigration");
     }
     IEnumerator CLeanUpHost()
@@ -98,6 +111,39 @@ public class StartSession : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
 
         FindObjectOfType<Spawn>().OnHostMigrationClean();
+
+    }
+     public void OnJoinInLobby()
+    {
+        var clienteTask = JoinLobby();
+    }
+    private async Task JoinLobby()
+    {
+        print("Lobby iniciando");
+        string lobbyID = "OurLobbyID";
+
+        var result = await networkRunner.JoinSessionLobby(SessionLobby.Custom, lobbyID);
+
+        if (!result.Ok)
+        {
+            print("Joint lobby"+lobbyID);
+        }
+        else
+        {
+            print("lobby ok");
+        }
+
+    }
+
+    public void CreateGame(string sessionName,string SceneName)
+    {
+        print("se crea la seccion"+ sessionName +" escena "+ SceneName +"build index "+ SceneUtility.GetBuildIndexByScenePath($"Scenes/Development/Ciceri/MainMap"));
+        var clienteTask = InitialNetworkRunner(networkRunner, GameMode.Host,sessionName, GameManager.instance.GetconnectionToken(), NetAddress.Any(), SceneUtility.GetBuildIndexByScenePath($"Scenes/Development/Ciceri/MainMap"),null) ;
+    }
+    public void JoinGame(SessionInfo sessionInfo)
+    {
+        print("entrando a la session "+ sessionInfo.Name);
+        var client = InitialNetworkRunner(networkRunner, GameMode.Client, sessionInfo.Name, GameManager.instance.GetconnectionToken(), NetAddress.Any(), SceneManager.GetActiveScene().buildIndex, null);
 
     }
 }

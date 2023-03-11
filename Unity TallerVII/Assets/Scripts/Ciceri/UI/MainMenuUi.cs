@@ -6,7 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUi : MonoBehaviour
 {
+    [Header("panels")]
+    public GameObject playerDetailspanel;
+    public GameObject SessionBrowsPanel;
+    public GameObject CrearSessionPanel;
+    public GameObject StatusPanel;
+    [Header("Player setting")]
     public TMP_InputField InputField;
+    [Header("New game ")]
+    public TMP_InputField SessionName;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,11 +23,42 @@ public class MainMenuUi : MonoBehaviour
             InputField.text = PlayerPrefs.GetString("PlayerName");
         }
     }
+    void Panels()
+    {
+        playerDetailspanel.SetActive(false);
+        SessionBrowsPanel.SetActive(false);
+        CrearSessionPanel.SetActive(false);
+        StatusPanel.SetActive(false);
+    }
     public void OnJoinGame()
     {
         
         PlayerPrefs.SetString("PlayerName",InputField.text);
         PlayerPrefs.Save();
-        SceneManager.LoadScene(1);
+
+        StartSession startSession = FindObjectOfType<StartSession>();
+
+        startSession.OnJoinInLobby();
+
+        Panels();
+
+        SessionBrowsPanel.SetActive(true);
     }
-}
+    public void OnCreateNewGameClicked()
+    {
+        Panels();
+
+        CrearSessionPanel.SetActive(true);
+    }
+
+    public void OnStarSessionOnClick()
+    {
+        StartSession startSession = FindObjectOfType<StartSession>();
+
+        startSession.CreateGame(SessionName.text,"MainMap");
+
+        Panels();
+
+        StatusPanel.SetActive(true);
+    }
+  }
