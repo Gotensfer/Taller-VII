@@ -143,12 +143,12 @@ public class AvatarMovement : NetworkBehaviour
             // Para emular un dash es necesario acomodar los valores del cc para poder
             // aplicar las velocidades necesarias
             cc.maxSpeed = dashForce;
-            cc.acceleration = dashForce * dashForce;
+            cc.acceleration = dashForce;
 
             canMove = false;
             canDash = false;
 
-            cc.Move(cc.Transform.forward);
+            cc.Move(GetComponent<AvatarAim>().CameraForward);
 
             Invoke(nameof(EnableMovement), dashTime);
             Invoke(nameof(ResetDashCD), dashCooldown);
