@@ -41,8 +41,10 @@ public class MainMenuUi : MonoBehaviour
         startSession.OnJoinInLobby();
 
         Panels();
-
+     
         SessionBrowsPanel.SetActive(true);
+
+        FindObjectOfType<SessionListUISessions>(true).OnLookinForGameSession();
     }
     public void OnCreateNewGameClicked()
     {
@@ -60,5 +62,10 @@ public class MainMenuUi : MonoBehaviour
         Panels();
 
         StatusPanel.SetActive(true);
+    }
+    public void OnjoiningServer()
+    {
+        Panels();
+        StatusPanel.gameObject.SetActive(true);
     }
   }

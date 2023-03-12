@@ -11,7 +11,12 @@ public class Spawn : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private NetworkPrefabRef _playerPrefab;
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
     Dictionary<int, NetworkObject> mapTokenIDWithNetworkPlayer = new Dictionary<int, NetworkObject>();
+    SessionListUISessions sessionListUISessions;
 
+    private void Awake()
+    {
+        sessionListUISessions = FindObjectOfType<SessionListUISessions>(true);
+    }
     int GetPlayerToken(NetworkRunner runner, PlayerRef player)
     {
         if (runner.LocalPlayer == player)
@@ -143,6 +148,22 @@ public class Spawn : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
     {
+        if (sessionListUISessions == null)
+            return;
+        if(sessionList.Count == 0)
+        {
+            print("no hay sessiones para  concectarse ");
+            sessionListUISessions.onNoSessionFound();
+        }
+        else
+        {
+            sessionListUISessions.ClearList();
+            foreach (SessionInfo sessionInfo in sessionList)
+            {
+                sessionListUISessions.AddList(sessionInfo);
+                print("session agregada nombre "+ sessionInfo.Name+" player count"+ sessionInfo.PlayerCount);
+            }
+        }
 
     }
 

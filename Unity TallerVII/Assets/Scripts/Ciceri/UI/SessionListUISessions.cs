@@ -14,7 +14,11 @@ public class SessionListUISessions : MonoBehaviour
     public GameObject SessionListUIPrefab;
     public VerticalLayoutGroup VarticalLayouGroup;
 
-    void clearlist()
+    public void Awake()
+    {
+        ClearList();
+    }
+    public void ClearList()
     {
         foreach (Transform child in VarticalLayouGroup.transform)
         {
@@ -29,18 +33,24 @@ public class SessionListUISessions : MonoBehaviour
 
         addSessionOnInfoListUi.OnjoinSession += AddSessionOnInfoList_OnSession;
     }
-    private void AddSessionOnInfoList_OnSession(SessionInfo obj)
+    private void AddSessionOnInfoList_OnSession(SessionInfo sessionInfo)
     {
+        StartSession startSession = FindObjectOfType<StartSession>();
 
+        startSession.JoinGame(sessionInfo);
+        MainMenuUi mainMenuUi = FindObjectOfType<MainMenuUi>();
+        mainMenuUi.OnjoiningServer();
     }
     public void onNoSessionFound()
     {
+        ClearList();
         statusText.text = "no hay sala de juego  ";
         statusText.gameObject.SetActive(true);
 
     }
     public  void OnLookinForGameSession()
     {
+        ClearList();
         statusText.text = "mira para secciones";
         statusText.gameObject.SetActive(true);
     }

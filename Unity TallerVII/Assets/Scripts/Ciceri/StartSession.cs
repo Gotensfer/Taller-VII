@@ -103,6 +103,7 @@ public class StartSession : MonoBehaviour
             }
         }
         StartCoroutine(CLeanUpHost());
+        runner.SetActiveScene(SceneManager.GetActiveScene().buildIndex);
 
         print("se completo el hostMigration");
     }

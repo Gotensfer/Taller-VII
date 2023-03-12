@@ -5,7 +5,7 @@ using Fusion;
 using UnityEngine.Events;
 using TMPro;
 
-public class AvatarStats : NetworkBehaviour
+public class AvatarStats : NetworkBehaviour, IPlayerLeft
 {
     //variables normales 
 
@@ -147,5 +147,13 @@ public class AvatarStats : NetworkBehaviour
         print("[RPC]cambio de nombre " + Name);
         this.Name = Name;
 
+    }
+
+    public void PlayerLeft(PlayerRef player)
+    {
+        if (Player == Object.InputAuthority)
+        {
+            Runner.Despawn(Object);
+        }
     }
 }
