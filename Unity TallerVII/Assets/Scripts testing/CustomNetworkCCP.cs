@@ -13,6 +13,7 @@ public class CustomNetworkCCP : NetworkTransform {
   public float acceleration  = 10.0f;
   public float braking       = 10.0f;
   public float maxSpeed      = 2.0f;
+  public float dashDistance  = 2.0f;
   public float rotationSpeed = 15.0f;
 
   [Networked]
@@ -103,7 +104,7 @@ public class CustomNetworkCCP : NetworkTransform {
     if (direction == default) {
       horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
     } else {
-      horizontalVel      = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
+      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
       //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
     }
 
@@ -115,4 +116,30 @@ public class CustomNetworkCCP : NetworkTransform {
     Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
     IsGrounded = Controller.isGrounded;
   }
+  
+  public virtual void Dash(Vector3 direction) {
+    var deltaTime    = Runner.DeltaTime;
+    var previousPos  = transform.position;
+    var moveVelocity = Velocity;
+
+    direction = direction.normalized;
+
+    var horizontalVel = default(Vector3);
+    horizontalVel = moveVelocity;
+    
+    if (direction == default) {
+      horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
+    } else {
+      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, dashDistance);
+    }
+    
+    moveVelocity = horizontalVel;
+    moveVelocity.y /= 2;
+    
+    Controller.Move(moveVelocity * deltaTime);
+
+    Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
+    IsGrounded = Controller.isGrounded;
+  }
+  
 }
