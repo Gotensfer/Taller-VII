@@ -115,4 +115,9 @@ public class CustomNetworkCCP : NetworkTransform {
     Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
     IsGrounded = Controller.isGrounded;
   }
+
+  public void Rotate()
+  {
+    
+  }
 }

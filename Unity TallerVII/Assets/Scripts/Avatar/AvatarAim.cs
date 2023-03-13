@@ -55,8 +55,8 @@ public class AvatarAim : NetworkBehaviour
         cameraRotation.x = Mathf.Clamp(cameraRotation.x, -90, 90);
         cameraRotation.y += aimInput.x * Time.deltaTime * mouseSensibility;
         cameraForward = localCamera.transform.forward;
+        
         localCamera.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0);
-        cc.WriteRotation(Quaternion.Euler(0, cameraRotation.y, 0));
     }
     
     private void GetAimInput(Vector2 input, Vector3 forward){ aimInput = input; }

@@ -10,8 +10,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(NetworkObject))]
 public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 {
-    private Action<Vector2> onMoveAction;
-    public Action<Vector2> OnMoveAction { get => onMoveAction; set => onMoveAction = value; }
+    private Action<Vector2, Vector3> onMoveAction;
+    public Action<Vector2, Vector3> OnMoveAction { get => onMoveAction; set => onMoveAction = value; }
     
     private Action<Vector2, Vector3> onAimAction;
     public Action<Vector2, Vector3> OnAimAction { get => onAimAction; set => onAimAction = value; }
@@ -36,14 +36,12 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 
     [Networked] private NetworkButtons previousButtons { get; set; }
 
-    NetworkCharacterControllerPrototype cc;
+    private AvatarAim avatarAim;
 
     public override void Spawned()
     {
         inputActions = new GeneralInputActions();
-
-        cc = GetComponent<NetworkCharacterControllerPrototype>();
-
+        avatarAim = GetComponent<AvatarAim>();
         if (Object.HasInputAuthority)
         {
             Debug.Log("Enabled");
@@ -74,6 +72,7 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
         input.Buttons.Set(AvatarButtons.Pickup, inputActions.Avatar.Pickup.IsPressed());
         input.DirectionalInput = inputActions.Avatar.Move.ReadValue<Vector2>();
         input.AimInput = inputActions.Avatar.Aim.ReadValue<Vector2>();
+        input.ForwardVector = avatarAim.CameraForward;
         return input;
     }
 
@@ -83,7 +82,7 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Crouch)) onCrouchAction(isCrouched);
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) onDashAction.Invoke();
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Pickup)) onPickupAction.Invoke();
-        onMoveAction(input.DirectionalInput);
+        onMoveAction(input.DirectionalInput, input.ForwardVector);
         onAimAction(input.AimInput, input.ForwardVector);
 
         previousButtons = input.Buttons;

@@ -59,9 +59,10 @@ public class AvatarMovement : NetworkBehaviour
         originalAcceleration = cc.acceleration;
     }
 
-    void Move(Vector2 directionalInput)
+    void Move(Vector2 directionalInput, Vector3 forwardVector)
     {
         Vector3 movementVector = Vector3.zero;
+        cc.transform.forward = forwardVector;
 
         if (canMove)
         {
@@ -74,6 +75,10 @@ public class AvatarMovement : NetworkBehaviour
             movementVector = movementDirection * movementSpeed * Runner.DeltaTime;
         }
 
+        Quaternion rotation = cc.transform.rotation;
+        rotation.eulerAngles = new Vector3(0, rotation.eulerAngles.y, rotation.eulerAngles.z);
+        cc.transform.rotation = rotation;
+        
         // Al CharacterControllerProtoype debe llamarse su Move() en todo momento aunque sea un Vector.Zero o de lo contrario
         // toda la simulación del movimiento en este objeto parará, resultando en comportamiento anomalo durante un salto o dash
         cc.Move(movementVector);
