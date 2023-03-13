@@ -89,6 +89,15 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Value"",
+                    ""id"": ""5518493a-75e7-4de2-bd0e-d2420ea28cdb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -223,6 +232,17 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9cb85b80-db50-40c4-9858-28b54abb1aaf"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -255,6 +275,7 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
         m_Avatar_Pickup = m_Avatar.FindAction("Pickup", throwIfNotFound: true);
         m_Avatar_Fire = m_Avatar.FindAction("Fire", throwIfNotFound: true);
         m_Avatar_Reload = m_Avatar.FindAction("Reload", throwIfNotFound: true);
+        m_Avatar_Aim = m_Avatar.FindAction("Aim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -321,6 +342,7 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Avatar_Pickup;
     private readonly InputAction m_Avatar_Fire;
     private readonly InputAction m_Avatar_Reload;
+    private readonly InputAction m_Avatar_Aim;
     public struct AvatarActions
     {
         private @GeneralInputActions m_Wrapper;
@@ -332,6 +354,7 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
         public InputAction @Pickup => m_Wrapper.m_Avatar_Pickup;
         public InputAction @Fire => m_Wrapper.m_Avatar_Fire;
         public InputAction @Reload => m_Wrapper.m_Avatar_Reload;
+        public InputAction @Aim => m_Wrapper.m_Avatar_Aim;
         public InputActionMap Get() { return m_Wrapper.m_Avatar; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -362,6 +385,9 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
                 @Reload.started -= m_Wrapper.m_AvatarActionsCallbackInterface.OnReload;
                 @Reload.performed -= m_Wrapper.m_AvatarActionsCallbackInterface.OnReload;
                 @Reload.canceled -= m_Wrapper.m_AvatarActionsCallbackInterface.OnReload;
+                @Aim.started -= m_Wrapper.m_AvatarActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_AvatarActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_AvatarActionsCallbackInterface.OnAim;
             }
             m_Wrapper.m_AvatarActionsCallbackInterface = instance;
             if (instance != null)
@@ -387,6 +413,9 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
                 @Reload.started += instance.OnReload;
                 @Reload.performed += instance.OnReload;
                 @Reload.canceled += instance.OnReload;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
         }
     }
@@ -409,5 +438,6 @@ public partial class @GeneralInputActions : IInputActionCollection2, IDisposable
         void OnPickup(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
 }

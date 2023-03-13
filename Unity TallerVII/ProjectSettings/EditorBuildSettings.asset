@@ -9,11 +9,8 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/Development/Ciceri/MainMenu.unity
-    guid: 2772ef18d110042488ad8b9023d9e8c5
-  - enabled: 1
-    path: Assets/Scenes/Development/Ciceri/MainMap.unity
-    guid: 1237e8f48ae383243af4ce6425db087c
+    path: Assets/Scenes/Development/Osorio/Osorio_TestingScene.unity
+    guid: 43cbfbf33fcf4174482eec3f529e6e15
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f75d65f910b757a49a4a20bcde9f41a3,
       type: 2}
