@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f946136b271b9c744abb9a946fc311a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 3
+  _interpolationDataSource: 0
   InterpolationSpace: 0
   InterpolationTarget: {fileID: 7196337378536226389}
   InterpolateErrorCorrection: 1
@@ -208,6 +208,7 @@ MonoBehaviour:
   acceleration: 10
   braking: 10
   maxSpeed: 2
+  dashDistance: 2
   rotationSpeed: 0
   _IsGrounded: 0
   _Velocity: {x: 0, y: 0, z: 0}
@@ -252,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 2
+  _IsCrouched: 0
 --- !u!114 &1098513717701176192
 MonoBehaviour:
   m_ObjectHideFlags: 0
