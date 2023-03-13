@@ -51,7 +51,7 @@ public class CustomNetworkCCP : NetworkTransform {
     if (Controller == null) {
       Controller = GetComponent<CharacterController>();
 
-      Assert.Check(Controller != null, $"An object with {nameof(NetworkCharacterControllerPrototype)} must also have a {nameof(CharacterController)} component.");
+      Assert.Check(Controller != null, $"An object with {nameof(CustomNetworkCCP)} must also have a {nameof(CharacterController)} component.");
     }
   }
 
@@ -114,10 +114,5 @@ public class CustomNetworkCCP : NetworkTransform {
 
     Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
     IsGrounded = Controller.isGrounded;
-  }
-
-  public void Rotate()
-  {
-    
   }
 }

@@ -20,12 +20,9 @@ public class AvatarAim : NetworkBehaviour
 
     private Vector3 cameraForward; public Vector3 CameraForward => cameraForward;
 
-    CustomNetworkCCP cc;
-
     private void Awake()
     {
         localCamera = GetComponentInChildren<Camera>();
-        cc = GetComponent<CustomNetworkCCP>();
     }
 
     private void Start()

@@ -30,7 +30,7 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
     private UnityEvent onPickupAction = new UnityEvent(); public UnityEvent OnPickupAction => onPickupAction;
 
     private bool isCrouched;
-    public bool IsCrouched { get => isCrouched; set => isCrouched = value; }
+    [Networked] public bool IsCrouched { get => isCrouched; set => isCrouched = value; }
 
     private GeneralInputActions inputActions; public GeneralInputActions InputActions => inputActions;
 
