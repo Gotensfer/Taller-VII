@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f946136b271b9c744abb9a946fc311a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 2
   InterpolationSpace: 0
   InterpolationTarget: {fileID: 7196337378536226389}
   InterpolateErrorCorrection: 1
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d5c99efdebab50468a81e58ac1ffdb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 2
   localCamera: {fileID: 0}
   cameraAnchorPoint: {fileID: 8536665860593576610}
   mouseSensibility: 15
@@ -302,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da61184e3b2e28a41b9af464c4801195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interpolationDataSource: 0
+  _interpolationDataSource: 2
 --- !u!1 &3966481676342634256
 GameObject:
   m_ObjectHideFlags: 0

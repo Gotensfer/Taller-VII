@@ -744,27 +744,12 @@ PrefabInstance:
     - target: {fileID: 1365725519880643421, guid: 7d5ca09531e5a0041b24629929728cba,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
-      value: -7256213705322749902
+      value: 1531897780025749252
       objectReference: {fileID: 0}
     - target: {fileID: 1365725519880643421, guid: 7d5ca09531e5a0041b24629929728cba,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
-      value: 1429711047037026733
-      objectReference: {fileID: 0}
-    - target: {fileID: 4511282006546487093, guid: 7d5ca09531e5a0041b24629929728cba,
-        type: 3}
-      propertyPath: _interpolationDataSource
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8559376386862076062, guid: 7d5ca09531e5a0041b24629929728cba,
-        type: 3}
-      propertyPath: _interpolationDataSource
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9193811847539760773, guid: 7d5ca09531e5a0041b24629929728cba,
-        type: 3}
-      propertyPath: _interpolationDataSource
-      value: 2
+      value: -4130135495087104614
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5ca09531e5a0041b24629929728cba, type: 3}
