@@ -21,7 +21,7 @@ public class AvatarMovement : NetworkBehaviour
 
     [SerializeField] float movementSpeed = 1;
 
-    NetworkCharacterControllerPrototype cc;
+    CustomNetworkCCP cc;
 
     private AvatarController avatarController;
     
@@ -43,7 +43,7 @@ public class AvatarMovement : NetworkBehaviour
 
     private void Awake()
     {
-        cc = GetComponent<NetworkCharacterControllerPrototype>();
+        cc = GetComponent<CustomNetworkCCP>();
         avatarController = GetComponent<AvatarController>();
 
         cc.maxSpeed = movementSpeed;
