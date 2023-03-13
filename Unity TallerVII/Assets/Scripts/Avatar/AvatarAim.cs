@@ -19,11 +19,13 @@ public class AvatarAim : NetworkBehaviour
     private GeneralInputActions inputActions;
 
     private Vector3 cameraForward; public Vector3 CameraForward => cameraForward;
-    
+
+    NetworkCharacterControllerPrototype cc;
 
     private void Awake()
     {
         localCamera = GetComponentInChildren<Camera>();
+        cc = GetComponent<NetworkCharacterControllerPrototype>();
     }
 
     private void Start()
@@ -54,7 +56,7 @@ public class AvatarAim : NetworkBehaviour
         cameraRotation.y += aimInput.x * Time.deltaTime * mouseSensibility;
         cameraForward = localCamera.transform.forward;
         localCamera.transform.rotation = Quaternion.Euler(cameraRotation.x, cameraRotation.y, 0);
-        transform.rotation = Quaternion.Euler(0, cameraRotation.y, 0);
+        cc.WriteRotation(Quaternion.Euler(0, cameraRotation.y, 0));
     }
     
     private void GetAimInput(Vector2 input, Vector3 forward){ aimInput = input; }
