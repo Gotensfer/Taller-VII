@@ -151,7 +151,7 @@ public class AvatarMovement : NetworkBehaviour
             // aplicar las velocidades necesarias
             
             cc.dashDistance = dashForce;
-            cc.acceleration = dashForce;
+            cc.dashAcceleration = dashForce;
 
             canMove = false;
             canDash = false;
@@ -166,7 +166,6 @@ public class AvatarMovement : NetworkBehaviour
     void EnableMovement()
     {
         canMove = true;
-        cc.acceleration = originalAcceleration;
     }
 
     void ResetDashCD()
