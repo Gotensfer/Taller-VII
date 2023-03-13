@@ -10,30 +10,39 @@ using UnityEngine.Events;
 [RequireComponent(typeof(NetworkObject))]
 public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 {
-    private Action<Vector2> onMoveAction; public Action<Vector2> OnMoveAction => onMoveAction;
-    private Action<bool> onCrouchAction; public Action<bool> OnCrouchAction => onCrouchAction;
-    private UnityEvent onJumpAction = new UnityEvent(); public UnityEvent OnJumpAction => onJumpAction;
-    private UnityEvent onDashAction = new UnityEvent(); public UnityEvent OnDashAction => onDashAction;
+    private Action<Vector2, Vector3> onMoveAction;
+    public Action<Vector2, Vector3> OnMoveAction { get => onMoveAction; set => onMoveAction = value; }
+    
+    private Action<Vector2, Vector3> onAimAction;
+    public Action<Vector2, Vector3> OnAimAction { get => onAimAction; set => onAimAction = value; }
+    
+    private Action<bool> onCrouchAction;
+    public Action<bool> OnCrouchAction { get => onCrouchAction; set => onCrouchAction = value; }
+
+    private UnityEvent onJumpAction = new UnityEvent();
+    public UnityEvent OnJumpAction { get => onJumpAction; set => onJumpAction = value; }
+
+    private Action<Vector3> onDashAction;
+    public Action<Vector3> OnDashAction { get => onDashAction; set => onDashAction = value; }
+
     private UnityEvent onFireAction = new UnityEvent(); public UnityEvent OnFireAction => onFireAction;
     private UnityEvent onReloadAction = new UnityEvent(); public UnityEvent OnReloadAction => onReloadAction;
     private UnityEvent onPickupAction = new UnityEvent(); public UnityEvent OnPickupAction => onPickupAction;
 
     private bool isCrouched;
-    public bool IsCrouched => isCrouched;
+    [Networked] public bool IsCrouched { get => isCrouched; set => isCrouched = value; }
 
-    private GeneralInputActions inputActions;
+    private GeneralInputActions inputActions; public GeneralInputActions InputActions => inputActions;
 
     [Networked] private NetworkButtons previousButtons { get; set; }
 
+    private AvatarAim avatarAim;
 
-    private void Awake()
+    public override void Spawned()
     {
         inputActions = new GeneralInputActions();
-    }
-
-    private void OnEnable()
-    {
-        if (Runner != null)
+        avatarAim = GetComponent<AvatarAim>();
+        if (Object.HasInputAuthority)
         {
             Debug.Log("Enabled");
             EnableInputs();
@@ -43,7 +52,10 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
 
     public override void FixedUpdateNetwork()
     {
-        if (GetInput<AvatarInput>(out var input)) UseInputs(input);
+        if (GetInput<AvatarInput>(out var input))
+        {
+            UseInputs(input);
+        }
     }   
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -59,18 +71,20 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
         input.Buttons.Set(AvatarButtons.Dash, inputActions.Avatar.Dash.IsPressed());
         input.Buttons.Set(AvatarButtons.Pickup, inputActions.Avatar.Pickup.IsPressed());
         input.DirectionalInput = inputActions.Avatar.Move.ReadValue<Vector2>();
+        input.AimInput = inputActions.Avatar.Aim.ReadValue<Vector2>();
+        input.ForwardVector = avatarAim.CameraForward;
         return input;
     }
 
     private void UseInputs(AvatarInput input)
     {
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump)) { OnJumpAction.Invoke(); }
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Crouch)) OnCrouchAction(isCrouched);
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) OnDashAction.Invoke();
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Pickup)) OnJumpAction.Invoke();
-        if (input.DirectionalInput != Vector2.zero) OnMoveAction(input.DirectionalInput);
-        
-        Debug.Log(input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump));
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump)) { onJumpAction.Invoke(); }
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Crouch)) onCrouchAction(isCrouched);
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) onDashAction(input.ForwardVector);
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Pickup)) onPickupAction.Invoke();
+        onMoveAction(input.DirectionalInput, input.ForwardVector);
+        onAimAction(input.AimInput, input.ForwardVector);
+
         previousButtons = input.Buttons;
     }
 

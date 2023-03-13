@@ -6,13 +6,14 @@ using UnityEngine;
 [OrderBefore(typeof(NetworkTransform))]
 [DisallowMultipleComponent]
 // ReSharper disable once CheckNamespace
-public class NetworkCharacterControllerPrototype : NetworkTransform {
+public class CustomNetworkCCP : NetworkTransform {
   [Header("Character Controller Settings")]
   public float gravity       = -20.0f;
   public float jumpImpulse   = 8.0f;
   public float acceleration  = 10.0f;
   public float braking       = 10.0f;
   public float maxSpeed      = 2.0f;
+  public float dashDistance  = 2.0f;
   public float rotationSpeed = 15.0f;
 
   [Networked]
@@ -51,7 +52,7 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
     if (Controller == null) {
       Controller = GetComponent<CharacterController>();
 
-      Assert.Check(Controller != null, $"An object with {nameof(NetworkCharacterControllerPrototype)} must also have a {nameof(CharacterController)} component.");
+      Assert.Check(Controller != null, $"An object with {nameof(CustomNetworkCCP)} must also have a {nameof(CharacterController)} component.");
     }
   }
 
@@ -103,8 +104,8 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
     if (direction == default) {
       horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
     } else {
-      horizontalVel      = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
-      transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
+      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, maxSpeed);
+      //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Runner.DeltaTime);
     }
 
     moveVelocity.x = horizontalVel.x;
@@ -115,4 +116,30 @@ public class NetworkCharacterControllerPrototype : NetworkTransform {
     Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
     IsGrounded = Controller.isGrounded;
   }
+  
+  public virtual void Dash(Vector3 direction) {
+    var deltaTime    = Runner.DeltaTime;
+    var previousPos  = transform.position;
+    var moveVelocity = Velocity;
+
+    direction = direction.normalized;
+
+    var horizontalVel = default(Vector3);
+    horizontalVel = moveVelocity;
+    
+    if (direction == default) {
+      horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
+    } else {
+      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, dashDistance);
+    }
+    
+    moveVelocity = horizontalVel;
+    moveVelocity.y /= 2;
+    
+    Controller.Move(moveVelocity * deltaTime);
+
+    Velocity   = (transform.position - previousPos) * Runner.Simulation.Config.TickRate;
+    IsGrounded = Controller.isGrounded;
+  }
+  
 }
