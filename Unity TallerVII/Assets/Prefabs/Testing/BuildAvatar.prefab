@@ -375,8 +375,8 @@ MonoBehaviour:
   crouchHeight: 1.5
   dashTime: 0.2
   dashCooldown: 1
-  dashForce: 1200
-  movementSpeed: 2
+  dashForce: 1600
+  movementSpeed: 4
   bodyRepresentation: {fileID: 7980108646426328417}
 --- !u!114 &9193811847539760773
 MonoBehaviour:
