@@ -11,6 +11,7 @@ public class CustomNetworkCCP : NetworkTransform {
   public float gravity       = -20.0f;
   public float jumpImpulse   = 8.0f;
   public float acceleration  = 10.0f;
+  public float dashAcceleration = 10.0f;
   public float braking       = 10.0f;
   public float maxSpeed      = 2.0f;
   public float dashDistance  = 2.0f;
@@ -130,7 +131,7 @@ public class CustomNetworkCCP : NetworkTransform {
     if (direction == default) {
       horizontalVel = Vector3.Lerp(horizontalVel, default, braking * deltaTime);
     } else {
-      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * acceleration * deltaTime, dashDistance);
+      horizontalVel = Vector3.ClampMagnitude(horizontalVel + direction * dashAcceleration * deltaTime, dashDistance);
     }
     
     moveVelocity = horizontalVel;
