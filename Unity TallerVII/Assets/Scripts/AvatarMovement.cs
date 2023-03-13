@@ -41,6 +41,8 @@ public class AvatarMovement : NetworkBehaviour
     float originalSpeed;
     float originalAcceleration;
 
+    float originalBraking;
+
     private void Awake()
     {
         cc = GetComponent<CustomNetworkCCP>();
@@ -57,6 +59,8 @@ public class AvatarMovement : NetworkBehaviour
 
         originalSpeed = cc.maxSpeed;
         originalAcceleration = cc.acceleration;
+
+        originalBraking = cc.braking;
     }
 
     void Move(Vector2 directionalInput, Vector3 forwardVector)
@@ -152,6 +156,7 @@ public class AvatarMovement : NetworkBehaviour
             
             cc.dashDistance = dashForce;
             cc.dashAcceleration = dashForce;
+            cc.braking = 10;
 
             canMove = false;
             canDash = false;
@@ -166,6 +171,7 @@ public class AvatarMovement : NetworkBehaviour
     void EnableMovement()
     {
         canMove = true;
+        cc.braking = originalBraking;
     }
 
     void ResetDashCD()
