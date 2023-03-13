@@ -21,8 +21,10 @@ public class AvatarMovement : NetworkBehaviour
 
     [SerializeField] float movementSpeed = 1;
 
-    NetworkCharacterControllerPrototype cc;
+    CustomNetworkCCP cc;
 
+    private AvatarController avatarController;
+    
     //Temporal para alfa con capsulas
     // Esto funcionará mientras este LA INTERPOLACION DESACTIVADA del NetworkCharacterControllerPrototype
     // ---
@@ -41,15 +43,15 @@ public class AvatarMovement : NetworkBehaviour
 
     private void Awake()
     {
-        cc = GetComponent<NetworkCharacterControllerPrototype>();
-        AvatarController avatarController = GetComponent<AvatarController>();
+        cc = GetComponent<CustomNetworkCCP>();
+        avatarController = GetComponent<AvatarController>();
 
         cc.maxSpeed = movementSpeed;
 
         avatarController.OnMoveAction += Move;
         avatarController.OnJumpAction.AddListener(Jump);
         avatarController.OnCrouchAction += Crouch;
-        avatarController.OnDashAction.AddListener(Dash);
+        avatarController.OnDashAction += Dash;
 
         standingHeight = cc.Controller.height;
 
@@ -57,9 +59,10 @@ public class AvatarMovement : NetworkBehaviour
         originalAcceleration = cc.acceleration;
     }
 
-    void Move(Vector2 directionalInput)
+    void Move(Vector2 directionalInput, Vector3 forwardVector)
     {
         Vector3 movementVector = Vector3.zero;
+        cc.transform.forward = forwardVector;
 
         if (canMove)
         {
@@ -72,6 +75,10 @@ public class AvatarMovement : NetworkBehaviour
             movementVector = movementDirection * movementSpeed * Runner.DeltaTime;
         }
 
+        Quaternion rotation = cc.transform.rotation;
+        rotation.eulerAngles = new Vector3(0, rotation.eulerAngles.y, rotation.eulerAngles.z);
+        cc.transform.rotation = rotation;
+        
         // Al CharacterControllerProtoype debe llamarse su Move() en todo momento aunque sea un Vector.Zero o de lo contrario
         // toda la simulación del movimiento en este objeto parará, resultando en comportamiento anomalo durante un salto o dash
         cc.Move(movementVector);
@@ -79,12 +86,12 @@ public class AvatarMovement : NetworkBehaviour
 
     void Crouch(bool toCrouch)
     {
-        if (!isCrouching)
+        if (!avatarController.IsCrouched)
         {
             cc.Controller.height = crouchHeight;
             float centerOffset = (2 - crouchHeight)/2;
             cc.Controller.center = new Vector2(0, 0 - centerOffset);
-            isCrouching = true;
+            avatarController.IsCrouched = true;
 
             //Temporal para alfa con capsulas
             // Esto funcionará mientras este LA INTERPOLACION DESACTIVADA del NetworkCharacterControllerPrototype
@@ -95,7 +102,7 @@ public class AvatarMovement : NetworkBehaviour
         {
             cc.Controller.height = 2;
             cc.Controller.center = new Vector2(0, 0);
-            isCrouching = false;
+            avatarController.IsCrouched = false;
 
             //Temporal para alfa con capsulas
             // Esto funcionará mientras este LA INTERPOLACION DESACTIVADA del NetworkCharacterControllerPrototype
@@ -136,19 +143,20 @@ public class AvatarMovement : NetworkBehaviour
         if (cc.IsGrounded) canDoubleJump = true;
     }
 
-    void Dash()
+    void Dash(Vector3 forward)
     {
         if (canDash)
         {
             // Para emular un dash es necesario acomodar los valores del cc para poder
             // aplicar las velocidades necesarias
-            cc.maxSpeed = dashForce;
-            cc.acceleration = dashForce * dashForce;
+            
+            cc.dashDistance = dashForce;
+            cc.acceleration = dashForce;
 
             canMove = false;
             canDash = false;
 
-            cc.Move(cc.Transform.forward);
+            cc.Dash(forward);
 
             Invoke(nameof(EnableMovement), dashTime);
             Invoke(nameof(ResetDashCD), dashCooldown);
@@ -158,7 +166,6 @@ public class AvatarMovement : NetworkBehaviour
     void EnableMovement()
     {
         canMove = true;
-        cc.maxSpeed = originalSpeed;
         cc.acceleration = originalAcceleration;
     }
 
