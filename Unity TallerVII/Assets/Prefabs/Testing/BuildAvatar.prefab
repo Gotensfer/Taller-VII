@@ -308,8 +308,8 @@ MonoBehaviour:
   TargetInterpolationDelay: 0.03
   gravity: -20
   jumpImpulse: 8
-  acceleration: 10
-  braking: 10
+  acceleration: 20
+  braking: 40
   maxSpeed: 2
   dashDistance: 2
   rotationSpeed: 0
