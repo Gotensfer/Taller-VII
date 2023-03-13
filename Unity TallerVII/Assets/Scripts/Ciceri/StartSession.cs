@@ -139,12 +139,11 @@ public class StartSession : MonoBehaviour
     public void CreateGame(string sessionName,string SceneName)
     {
         print("se crea la seccion"+ sessionName +" escena "+ SceneName +"build index "+ SceneUtility.GetBuildIndexByScenePath($"Scenes/Development/Ciceri/MainMap"));
-        var clienteTask = InitialNetworkRunner(networkRunner, GameMode.Host,sessionName, GameManager.instance.GetconnectionToken(), NetAddress.Any(), SceneUtility.GetBuildIndexByScenePath($"Scenes/Development/Ciceri/MainMap"),null) ;
+        var clienteTask = InitialNetworkRunner(networkRunner, GameMode.Host,sessionName, GameManager.instance.GetconnectionToken(), NetAddress.Any(), SceneUtility.GetBuildIndexByScenePath($"Scenes/Development/Ciceri/CopiaDeMapa"),null) ;
     }
     public void JoinGame(SessionInfo sessionInfo)
     {
         print("entrando a la session "+ sessionInfo.Name);
         var client = InitialNetworkRunner(networkRunner, GameMode.Client, sessionInfo.Name, GameManager.instance.GetconnectionToken(), NetAddress.Any(), SceneManager.GetActiveScene().buildIndex, null);
-
     }
 }
