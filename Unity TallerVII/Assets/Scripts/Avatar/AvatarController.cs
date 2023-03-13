@@ -22,8 +22,8 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
     private UnityEvent onJumpAction = new UnityEvent();
     public UnityEvent OnJumpAction { get => onJumpAction; set => onJumpAction = value; }
 
-    private UnityEvent onDashAction = new UnityEvent();
-    public UnityEvent OnDashAction { get => onDashAction; set => onDashAction = value; }
+    private Action<Vector3> onDashAction;
+    public Action<Vector3> OnDashAction { get => onDashAction; set => onDashAction = value; }
 
     private UnityEvent onFireAction = new UnityEvent(); public UnityEvent OnFireAction => onFireAction;
     private UnityEvent onReloadAction = new UnityEvent(); public UnityEvent OnReloadAction => onReloadAction;
@@ -80,7 +80,7 @@ public class AvatarController : NetworkBehaviour, INetworkRunnerCallbacks
     {
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Jump)) { onJumpAction.Invoke(); }
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Crouch)) onCrouchAction(isCrouched);
-        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) onDashAction.Invoke();
+        if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Dash)) onDashAction(input.ForwardVector);
         if (input.Buttons.WasPressed(previousButtons, AvatarButtons.Pickup)) onPickupAction.Invoke();
         onMoveAction(input.DirectionalInput, input.ForwardVector);
         onAimAction(input.AimInput, input.ForwardVector);

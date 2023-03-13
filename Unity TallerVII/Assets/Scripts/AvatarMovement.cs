@@ -51,7 +51,7 @@ public class AvatarMovement : NetworkBehaviour
         avatarController.OnMoveAction += Move;
         avatarController.OnJumpAction.AddListener(Jump);
         avatarController.OnCrouchAction += Crouch;
-        avatarController.OnDashAction.AddListener(Dash);
+        avatarController.OnDashAction += Dash;
 
         standingHeight = cc.Controller.height;
 
@@ -143,7 +143,7 @@ public class AvatarMovement : NetworkBehaviour
         if (cc.IsGrounded) canDoubleJump = true;
     }
 
-    void Dash()
+    void Dash(Vector3 forward)
     {
         if (canDash)
         {
@@ -155,7 +155,7 @@ public class AvatarMovement : NetworkBehaviour
             canMove = false;
             canDash = false;
 
-            cc.Move(GetComponent<AvatarAim>().CameraForward);
+            cc.Move(forward);
 
             Invoke(nameof(EnableMovement), dashTime);
             Invoke(nameof(ResetDashCD), dashCooldown);
