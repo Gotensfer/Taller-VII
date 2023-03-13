@@ -23,6 +23,8 @@ public class AvatarMovement : NetworkBehaviour
 
     NetworkCharacterControllerPrototype cc;
 
+    private AvatarController avatarController;
+    
     //Temporal para alfa con capsulas
     // Esto funcionará mientras este LA INTERPOLACION DESACTIVADA del NetworkCharacterControllerPrototype
     // ---
@@ -42,7 +44,7 @@ public class AvatarMovement : NetworkBehaviour
     private void Awake()
     {
         cc = GetComponent<NetworkCharacterControllerPrototype>();
-        AvatarController avatarController = GetComponent<AvatarController>();
+        avatarController = GetComponent<AvatarController>();
 
         cc.maxSpeed = movementSpeed;
 
@@ -79,12 +81,12 @@ public class AvatarMovement : NetworkBehaviour
 
     void Crouch(bool toCrouch)
     {
-        if (!isCrouching)
+        if (!avatarController.IsCrouched)
         {
             cc.Controller.height = crouchHeight;
             float centerOffset = (2 - crouchHeight)/2;
             cc.Controller.center = new Vector2(0, 0 - centerOffset);
-            isCrouching = true;
+            avatarController.IsCrouched = true;
 
             //Temporal para alfa con capsulas
             // Esto funcionará mientras este LA INTERPOLACION DESACTIVADA del NetworkCharacterControllerPrototype
@@ -95,7 +97,7 @@ public class AvatarMovement : NetworkBehaviour
         {
             cc.Controller.height = 2;
             cc.Controller.center = new Vector2(0, 0);
-            isCrouching = false;
+            avatarController.IsCrouched = false;
 
             //Temporal para alfa con capsulas
             // Esto funcionará mientras este LA INTERPOLACION DESACTIVADA del NetworkCharacterControllerPrototype

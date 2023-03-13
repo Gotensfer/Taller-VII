@@ -671,18 +671,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1582005187, guid: 7d5ca09531e5a0041b24629929728cba, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.528
-      objectReference: {fileID: 0}
-    - target: {fileID: 1582005188, guid: 7d5ca09531e5a0041b24629929728cba, type: 3}
-      propertyPath: m_Antialiasing
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1582005190, guid: 7d5ca09531e5a0041b24629929728cba, type: 3}
-      propertyPath: field of view
-      value: 70
-      objectReference: {fileID: 0}
     - target: {fileID: 1365725519880643416, guid: 7d5ca09531e5a0041b24629929728cba,
         type: 3}
       propertyPath: m_RootOrder
@@ -756,12 +744,12 @@ PrefabInstance:
     - target: {fileID: 1365725519880643421, guid: 7d5ca09531e5a0041b24629929728cba,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
-      value: -6751580305144275723
+      value: -2502040637560904540
       objectReference: {fileID: 0}
     - target: {fileID: 1365725519880643421, guid: 7d5ca09531e5a0041b24629929728cba,
         type: 3}
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
-      value: 6423475331742474382
+      value: -5152689450030804095
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5ca09531e5a0041b24629929728cba, type: 3}
